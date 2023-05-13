@@ -52,7 +52,6 @@ public class Login extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(300, 400));
         setMinimumSize(new java.awt.Dimension(300, 400));
         setName("login"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(300, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(300, 400));
 
@@ -118,7 +117,8 @@ public class Login extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jTextField1.setToolTipText("");
+        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -140,7 +140,7 @@ public class Login extends javax.swing.JFrame {
 
         jPasswordField1.setBackground(new java.awt.Color(204, 204, 204));
         jPasswordField1.setForeground(new java.awt.Color(51, 51, 51));
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel5.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 250, 30));
 
         jPanel6.add(jPanel5);

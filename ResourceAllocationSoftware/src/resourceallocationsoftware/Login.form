@@ -17,9 +17,6 @@
       <Dimension value="[300, 400]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="login" noResource="true"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[300, 400]"/>
-    </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[300, 400]"/>
@@ -204,9 +201,10 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                    <LineBorder>
+                    <LineBorder roundedCorners="true">
                       <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
                     </LineBorder>
                   </Border>
@@ -264,7 +262,7 @@
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                    <LineBorder>
+                    <LineBorder roundedCorners="true">
                       <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
                     </LineBorder>
                   </Border>
