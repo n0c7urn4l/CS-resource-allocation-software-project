@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package resourceallocationsoftware;
+package resourceallocationsoftware.ViewClasses;
 
 /**
  *
@@ -49,13 +49,12 @@ public class Login extends javax.swing.JFrame {
         setIconImages(null);
         setLocation(new java.awt.Point(0, 0));
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(300, 400));
         setMinimumSize(new java.awt.Dimension(300, 400));
         setName("login"); // NOI18N
         setResizable(false);
         setSize(new java.awt.Dimension(300, 400));
 
-        jPanel6.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setForeground(new java.awt.Color(255, 255, 255));
         jPanel6.setMaximumSize(new java.awt.Dimension(300, 400));
         jPanel6.setPreferredSize(new java.awt.Dimension(300, 400));
@@ -66,7 +65,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome");
         jPanel2.add(jLabel1, java.awt.BorderLayout.CENTER);
@@ -91,6 +90,7 @@ public class Login extends javax.swing.JFrame {
         jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton1.setText("Admin");
+        jRadioButton1.setPreferredSize(new java.awt.Dimension(65, 21));
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -116,8 +116,10 @@ public class Login extends javax.swing.JFrame {
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
         jTextField1.setToolTipText("");
+        jTextField1.setActionCommand("<Not Set>");
         jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +141,7 @@ public class Login extends javax.swing.JFrame {
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPasswordField1.setBackground(new java.awt.Color(204, 204, 204));
+        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(51, 51, 51));
         jPasswordField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jPanel5.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 250, 30));
@@ -164,6 +167,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Dont have an account yet? Sign Up.");
+        jLabel5.setPreferredSize(new java.awt.Dimension(210, 16));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -176,6 +180,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
