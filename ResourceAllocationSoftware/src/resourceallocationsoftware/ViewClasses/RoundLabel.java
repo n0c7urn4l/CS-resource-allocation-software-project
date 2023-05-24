@@ -19,41 +19,41 @@ import javax.swing.JLabel;
 
 public class RoundLabel extends JLabel {
 
-    public int getRoundTopLeft() {
-        return roundTopLeft;
-    }
-
-    public void setRoundTopLeft(int roundTopLeft) {
-        this.roundTopLeft = roundTopLeft;
-        repaint();
-    }
-
-    public int getRoundTopRight() {
-        return roundTopRight;
-    }
-
-    public void setRoundTopRight(int roundTopRight) {
-        this.roundTopRight = roundTopRight;
-        repaint();
-    }
-
-    public int getRoundBottomLeft() {
-        return roundBottomLeft;
-    }
-
-    public void setRoundBottomLeft(int roundBottomLeft) {
-        this.roundBottomLeft = roundBottomLeft;
-        repaint();
-    }
-
-    public int getRoundBottomRight() {
-        return roundBottomRight;
-    }
-
-    public void setRoundBottomRight(int roundBottomRight) {
-        this.roundBottomRight = roundBottomRight;
-        repaint();
-    }
+//    public int getRoundTopLeft() {
+//        return roundTopLeft;
+//    }
+//
+//    public void setRoundTopLeft(int roundTopLeft) {
+//        this.roundTopLeft = roundTopLeft;
+//        repaint();
+//    }
+//
+//    public int getRoundTopRight() {
+//        return roundTopRight;
+//    }
+//
+//    public void setRoundTopRight(int roundTopRight) {
+//        this.roundTopRight = roundTopRight;
+//        repaint();
+//    }
+//
+//    public int getRoundBottomLeft() {
+//        return roundBottomLeft;
+//    }
+//
+//    public void setRoundBottomLeft(int roundBottomLeft) {
+//        this.roundBottomLeft = roundBottomLeft;
+//        repaint();
+//    }
+//
+//    public int getRoundBottomRight() {
+//        return roundBottomRight;
+//    }
+//
+//    public void setRoundBottomRight(int roundBottomRight) {
+//        this.roundBottomRight = roundBottomRight;
+//        repaint();
+//    }
 
     private int roundTopLeft = 0;
     private int roundTopRight = 0;
