@@ -4,6 +4,7 @@
  */
 package resourceallocationsoftware.ViewClasses;
 import java.awt.*;
+
 /**
  *
  * @author shanu
@@ -27,11 +28,19 @@ public class RoundTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateChooser2 = new com.raven.datechooser.DateChooser();
+        dateChooser1 = new com.raven.datechooser.DateChooser();
         jPanel1 = new RoundPanel(10, 10, 10, 10);
         jPanel4 = new RoundPanel(10, 10, 0, 0);
         jButton1 = new javax.swing.JButton();
         jLabel1 = new RoundLabel(0, 0, 10, 0);
         jTextField1 = new javax.swing.JTextField();
+
+        dateChooser2.setBackground(new java.awt.Color(0, 204, 204));
+        dateChooser2.setForeground(new java.awt.Color(0, 51, 153));
+        dateChooser2.setDateFormat("dd-MMMM-yyyy");
+        dateChooser2.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        dateChooser2.setTextRefernce(jTextField1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -70,8 +79,6 @@ public class RoundTest extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("close");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 70, 20));
-
-        jTextField1.setText("jTextField1");
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,6 +136,8 @@ public class RoundTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.datechooser.DateChooser dateChooser1;
+    private com.raven.datechooser.DateChooser dateChooser2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

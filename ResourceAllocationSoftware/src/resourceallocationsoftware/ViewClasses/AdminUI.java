@@ -28,15 +28,15 @@ public class AdminUI extends javax.swing.JFrame {
         setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         initMoving(AdminUI.this);
         
-//        bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-//        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
         
         
     }
@@ -74,9 +74,9 @@ public class AdminUI extends javax.swing.JFrame {
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         jPanel5 = new RoundPanel(30, 30, 30, 30);
-        spHallTable = new javax.swing.JScrollPane();
-        hallTable = new resourceallocationsoftware.ViewClasses.Table();
         jLabel9 = new RoundLabel(30, 30, 30, 30);
+        jScrollPane2 = new javax.swing.JScrollPane();
+        hallData = new resourceallocationsoftware.ViewClasses.Table.Table();
         jPanel6 = new RoundPanel(30, 30, 30, 30);
         jLabel10 = new RoundLabel(30, 30, 30, 30);
         jPanel15 = new RoundPanel(20, 20, 20, 20);
@@ -90,16 +90,15 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel7 = new RoundPanel(30, 30, 30, 30);
-        spCustomerTable = new javax.swing.JScrollPane();
-        bookingTable = new resourceallocationsoftware.ViewClasses.Table();
         jLabel11 = new RoundLabel(30, 30, 30, 30);
-        combobox1 = new resourceallocationsoftware.ViewClasses.Combobox();
         jLabel17 = new javax.swing.JLabel();
         dateRdBtn = new javax.swing.JRadioButton();
         customerNicRdBtn = new javax.swing.JRadioButton();
         bookingSearchBtn = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         customerNicTextField2 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bookingTable = new resourceallocationsoftware.ViewClasses.Table.Table();
         jPanel1 = new RoundPanel(30, 30, 30, 30);
         jLabel5 = new RoundLabel(30, 30, 30, 30);
         customerSearchBtn = new javax.swing.JButton();
@@ -485,7 +484,13 @@ public class AdminUI extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(247, 251, 255));
 
-        hallTable.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel9.setBackground(new java.awt.Color(247, 251, 255));
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(57, 72, 103));
+        jLabel9.setText("Hall Data");
+
+        hallData.setForeground(new java.awt.Color(155, 164, 181));
+        hallData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -494,23 +499,18 @@ public class AdminUI extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        hallTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        hallTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
-        hallTable.setSelectionForeground(new java.awt.Color(247, 251, 255));
-        hallTable.getTableHeader().setReorderingAllowed(false);
-        spHallTable.setViewportView(hallTable);
-
-        jLabel9.setBackground(new java.awt.Color(247, 251, 255));
-        jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(57, 72, 103));
-        jLabel9.setText("Hall Data");
+        hallData.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        hallData.setSelectionBackground(new java.awt.Color(57, 72, 103));
+        hallData.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        hallData.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(hallData);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -519,25 +519,20 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spHallTable, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(spHallTable, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        spHallTable.setVerticalScrollBar(new ScrollBar());
-        spHallTable.getVerticalScrollBar().setBackground(new Color(247,251,255));
-        spHallTable.getViewport().setBackground(new Color(247,251,255));
-        JPanel hp = new JPanel();
-        hp.setBackground(new Color(247,251,255));
-        spCustomerTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, hp);
+        jScrollPane2.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
         jPanel6.setBackground(new java.awt.Color(247, 251, 255));
 
@@ -672,54 +667,11 @@ public class AdminUI extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(247, 251, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bookingTable.setForeground(new java.awt.Color(137, 145, 160));
-        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Booking ID", "Customer ID", "Hall no", "Date", "Payment ID"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        bookingTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        bookingTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
-        bookingTable.setSelectionForeground(new java.awt.Color(247, 251, 255));
-        bookingTable.getTableHeader().setReorderingAllowed(false);
-        spCustomerTable.setViewportView(bookingTable);
-
-        jPanel7.add(spCustomerTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 76, 605, 368));
-        spCustomerTable.setVerticalScrollBar(new ScrollBar());
-        spCustomerTable.getVerticalScrollBar().setBackground(new Color(247,251,255));
-        spCustomerTable.getViewport().setBackground(new Color(247,251,255));
-        JPanel p = new JPanel();
-        p.setBackground(new Color(247,251,255));
-        spCustomerTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-
         jLabel11.setBackground(new java.awt.Color(247, 251, 255));
         jLabel11.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(57, 72, 103));
         jLabel11.setText("Booking Details");
         jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 0, 150, -1));
-
-        combobox1.setBorder(null);
-        combobox1.setForeground(new java.awt.Color(57, 72, 103));
-        combobox1.setMaximumRowCount(32);
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        combobox1.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        combobox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox1ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 38, -1));
 
         jLabel17.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(155, 164, 181));
@@ -800,6 +752,32 @@ public class AdminUI extends javax.swing.JFrame {
             }
         });
         jPanel7.add(customerNicTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 160, 30));
+
+        bookingTable.setForeground(new java.awt.Color(155, 164, 181));
+        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Booking ID", "Customer ID", "Hall no", "Date", "Payment ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        bookingTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        bookingTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
+        bookingTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        bookingTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(bookingTable);
+
+        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 600, 370));
+        jScrollPane1.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
         jPanel1.setBackground(new java.awt.Color(247, 251, 255));
 
@@ -938,28 +916,29 @@ public class AdminUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(15, 15, 15)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(15, 15, 15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
 
         closeBtn.setBackground(new java.awt.Color(57, 72, 103));
@@ -1421,9 +1400,8 @@ public class AdminUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton bookingSearchBtn;
-    private resourceallocationsoftware.ViewClasses.Table bookingTable;
+    private resourceallocationsoftware.ViewClasses.Table.Table bookingTable;
     private javax.swing.JLabel closeBtn;
-    private resourceallocationsoftware.ViewClasses.Combobox combobox1;
     private javax.swing.JRadioButton customerNicRdBtn;
     private javax.swing.JTextField customerNicTextField;
     private javax.swing.JTextField customerNicTextField2;
@@ -1431,7 +1409,7 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton dateRdBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel goBackBtn;
-    private resourceallocationsoftware.ViewClasses.Table hallTable;
+    private resourceallocationsoftware.ViewClasses.Table.Table hallData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1469,6 +1447,8 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField loginIdTextField3;
@@ -1476,8 +1456,6 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JTextField loginIdTextField5;
     private javax.swing.JLabel minimizeBtn;
     private javax.swing.JPanel panelMoving;
-    private javax.swing.JScrollPane spCustomerTable;
-    private javax.swing.JScrollPane spHallTable;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
