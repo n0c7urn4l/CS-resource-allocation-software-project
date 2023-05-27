@@ -26,6 +26,16 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         initMoving(this);
+        bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
+        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
+        
     }
 
     /**
@@ -61,37 +71,32 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JButton();
         jPanel1 = new RoundPanel(20, 20, 20, 20);
         jPanel14 = new RoundPanel(10, 10, 10, 10);
-        jLabel18 = new javax.swing.JLabel();
-        combobox2 = new resourceallocationsoftware.ViewClasses.Combobox();
-        combobox3 = new resourceallocationsoftware.ViewClasses.Combobox();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        combobox4 = new resourceallocationsoftware.ViewClasses.Combobox();
         jLabel21 = new javax.swing.JLabel();
         loginIdTextField6 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        oneTimeRdb = new radio_button.RadioButtonCustom();
+        periodicRdb = new radio_button.RadioButtonCustom();
+        recurringRdb = new radio_button.RadioButtonCustom();
         jPanel5 = new RoundPanel(30, 30, 30, 30);
-        spHallTable = new javax.swing.JScrollPane();
-        hallTable = new resourceallocationsoftware.ViewClasses.Table();
         jLabel9 = new RoundLabel(30, 30, 30, 30);
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table2 = new resourceallocationsoftware.ViewClasses.Table.Table();
         jPanel6 = new RoundPanel(30, 30, 30, 30);
         jLabel10 = new RoundLabel(30, 30, 30, 30);
         jPanel15 = new RoundPanel(20, 20, 20, 20);
         jPanel17 = new RoundPanel(10, 10, 10, 10);
         jPanel7 = new RoundPanel(30, 30, 30, 30);
-        spCustomerTable = new javax.swing.JScrollPane();
-        bookingTable = new resourceallocationsoftware.ViewClasses.Table();
         jLabel11 = new RoundLabel(30, 30, 30, 30);
-        combobox1 = new resourceallocationsoftware.ViewClasses.Combobox();
         jLabel17 = new javax.swing.JLabel();
         bookingSearchBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bookingTable = new resourceallocationsoftware.ViewClasses.Table.Table();
         closeBtn = new RoundLabel(0, 0, 50, 0);
         goBackBtn = new RoundLabel(0, 0, 50, 0);
         minimizeBtn = new RoundLabel(0, 0, 50, 0);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1200, 800));
 
         panelMoving.setBackground(new java.awt.Color(57, 72, 103));
         panelMoving.setPreferredSize(new java.awt.Dimension(1200, 800));
@@ -411,55 +416,8 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
 
         jPanel14.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel14.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jPanel14.setPreferredSize(new java.awt.Dimension(203, 178));
-
-        jLabel18.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(155, 164, 181));
-        jLabel18.setText("Day");
-        jLabel18.setPreferredSize(new java.awt.Dimension(70, 18));
-
-        combobox2.setBorder(null);
-        combobox2.setForeground(new java.awt.Color(57, 72, 103));
-        combobox2.setMaximumRowCount(32);
-        combobox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        combobox2.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        combobox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox2ActionPerformed(evt);
-            }
-        });
-
-        combobox3.setBorder(null);
-        combobox3.setForeground(new java.awt.Color(57, 72, 103));
-        combobox3.setMaximumRowCount(32);
-        combobox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", " ", " " }));
-        combobox3.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        combobox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox3ActionPerformed(evt);
-            }
-        });
-
-        jLabel19.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(155, 164, 181));
-        jLabel19.setText("Month");
-        jLabel19.setPreferredSize(new java.awt.Dimension(70, 18));
-
-        jLabel20.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(155, 164, 181));
-        jLabel20.setText("Year");
-        jLabel20.setPreferredSize(new java.awt.Dimension(70, 18));
-
-        combobox4.setBorder(null);
-        combobox4.setForeground(new java.awt.Color(57, 72, 103));
-        combobox4.setMaximumRowCount(32);
-        combobox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", " " }));
-        combobox4.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        combobox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox4ActionPerformed(evt);
-            }
-        });
 
         jLabel21.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(155, 164, 181));
@@ -501,6 +459,36 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(57, 72, 103));
         jSeparator2.setForeground(new java.awt.Color(57, 72, 103));
 
+        oneTimeRdb.setBackground(new java.awt.Color(57, 72, 103));
+        oneTimeRdb.setForeground(new java.awt.Color(155, 164, 181));
+        oneTimeRdb.setText("One Time Booking");
+        oneTimeRdb.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        oneTimeRdb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                oneTimeRdbActionPerformed(evt);
+            }
+        });
+
+        periodicRdb.setBackground(new java.awt.Color(57, 72, 103));
+        periodicRdb.setForeground(new java.awt.Color(155, 164, 181));
+        periodicRdb.setText("Periodic Booking");
+        periodicRdb.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        periodicRdb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                periodicRdbActionPerformed(evt);
+            }
+        });
+
+        recurringRdb.setBackground(new java.awt.Color(57, 72, 103));
+        recurringRdb.setForeground(new java.awt.Color(155, 164, 181));
+        recurringRdb.setText("Recurring Booking");
+        recurringRdb.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        recurringRdb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recurringRdbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
@@ -508,45 +496,33 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(combobox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(combobox3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(combobox4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(loginIdTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                    .addComponent(jSeparator2)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(loginIdTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(jSeparator2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(recurringRdb, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(periodicRdb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(oneTimeRdb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
+                        .addGap(14, 14, 14)))
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(oneTimeRdb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(periodicRdb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(recurringRdb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(loginIdTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -602,12 +578,18 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(247, 251, 255));
 
-        hallTable.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel9.setBackground(new java.awt.Color(247, 251, 255));
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(57, 72, 103));
+        jLabel9.setText("Hall Data");
+
+        table2.setForeground(new java.awt.Color(155, 164, 181));
+        table2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Hall no", "Capacity", "Pricing"
+                "Hall No ", "Capacity", "Pricing"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -618,16 +600,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        hallTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        hallTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
-        hallTable.setSelectionForeground(new java.awt.Color(247, 251, 255));
-        hallTable.getTableHeader().setReorderingAllowed(false);
-        spHallTable.setViewportView(hallTable);
-
-        jLabel9.setBackground(new java.awt.Color(247, 251, 255));
-        jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(57, 72, 103));
-        jLabel9.setText("Hall Data");
+        table2.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        table2.setSelectionBackground(new java.awt.Color(57, 72, 103));
+        table2.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        table2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(table2);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -636,25 +613,20 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spHallTable, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spHallTable, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        spHallTable.setVerticalScrollBar(new ScrollBar());
-        spHallTable.getVerticalScrollBar().setBackground(new Color(247,251,255));
-        spHallTable.getViewport().setBackground(new Color(247,251,255));
-        JPanel hp = new JPanel();
-        hp.setBackground(new Color(247,251,255));
-        spCustomerTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, hp);
+        jScrollPane2.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
         jPanel6.setBackground(new java.awt.Color(247, 251, 255));
 
@@ -692,7 +664,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -707,60 +679,17 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(247, 251, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bookingTable.setForeground(new java.awt.Color(137, 145, 160));
-        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Booking ID", "Hall no", "Date", "Payment ID"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        bookingTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        bookingTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
-        bookingTable.setSelectionForeground(new java.awt.Color(247, 251, 255));
-        bookingTable.getTableHeader().setReorderingAllowed(false);
-        spCustomerTable.setViewportView(bookingTable);
-
-        jPanel7.add(spCustomerTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 76, 605, 368));
-        spCustomerTable.setVerticalScrollBar(new ScrollBar());
-        spCustomerTable.getVerticalScrollBar().setBackground(new Color(247,251,255));
-        spCustomerTable.getViewport().setBackground(new Color(247,251,255));
-        JPanel p = new JPanel();
-        p.setBackground(new Color(247,251,255));
-        spCustomerTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-
         jLabel11.setBackground(new java.awt.Color(247, 251, 255));
         jLabel11.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(57, 72, 103));
         jLabel11.setText("Booking Details");
         jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 0, 150, -1));
 
-        combobox1.setBorder(null);
-        combobox1.setForeground(new java.awt.Color(57, 72, 103));
-        combobox1.setMaximumRowCount(32);
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        combobox1.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        combobox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combobox1ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(combobox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 38, -1));
-
         jLabel17.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(155, 164, 181));
         jLabel17.setText("Date");
         jLabel17.setPreferredSize(new java.awt.Dimension(70, 18));
-        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 51, 23));
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 51, 23));
 
         bookingSearchBtn.setBackground(new java.awt.Color(57, 72, 103));
         bookingSearchBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -774,7 +703,34 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 bookingSearchBtnMouseExited(evt);
             }
         });
-        jPanel7.add(bookingSearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 84, 48));
+        jPanel7.add(bookingSearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 84, 40));
+
+        bookingTable.setForeground(new java.awt.Color(155, 164, 181));
+        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Booking ID", "Hall No", "Date", "Payment ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        bookingTable.setToolTipText("");
+        bookingTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        bookingTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
+        bookingTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        bookingTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(bookingTable);
+
+        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 590, 360));
+        jScrollPane1.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1141,6 +1097,26 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_loginIdTextField6ActionPerformed
 
+    private void oneTimeRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTimeRdbActionPerformed
+        periodicRdb.setSelected(false);
+        recurringRdb.setSelected(false);
+        new OneTimeUI().showWindow();
+           
+    }//GEN-LAST:event_oneTimeRdbActionPerformed
+
+    private void periodicRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_periodicRdbActionPerformed
+        oneTimeRdb.setSelected(false);
+        recurringRdb.setSelected(false);
+        new PeriodicUI().showPeriodicUI();
+    }//GEN-LAST:event_periodicRdbActionPerformed
+
+    private void recurringRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recurringRdbActionPerformed
+        oneTimeRdb.setSelected(false);
+        periodicRdb.setSelected(false);
+        new RecuringUI().showRecuringUI();
+    }//GEN-LAST:event_recurringRdbActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -1202,23 +1178,15 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton bookingSearchBtn;
-    private resourceallocationsoftware.ViewClasses.Table bookingTable;
+    private resourceallocationsoftware.ViewClasses.Table.Table bookingTable;
     private javax.swing.JLabel closeBtn;
-    private resourceallocationsoftware.ViewClasses.Combobox combobox1;
-    private resourceallocationsoftware.ViewClasses.Combobox combobox2;
-    private resourceallocationsoftware.ViewClasses.Combobox combobox3;
-    private resourceallocationsoftware.ViewClasses.Combobox combobox4;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel goBackBtn;
-    private resourceallocationsoftware.ViewClasses.Table hallTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1242,14 +1210,18 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField loginIdTextField3;
     private javax.swing.JTextField loginIdTextField4;
     private javax.swing.JTextField loginIdTextField5;
     private javax.swing.JTextField loginIdTextField6;
     private javax.swing.JLabel minimizeBtn;
+    private radio_button.RadioButtonCustom oneTimeRdb;
     private javax.swing.JPanel panelMoving;
-    private javax.swing.JScrollPane spCustomerTable;
-    private javax.swing.JScrollPane spHallTable;
+    private radio_button.RadioButtonCustom periodicRdb;
+    private radio_button.RadioButtonCustom recurringRdb;
+    private resourceallocationsoftware.ViewClasses.Table.Table table2;
     // End of variables declaration//GEN-END:variables
 }
