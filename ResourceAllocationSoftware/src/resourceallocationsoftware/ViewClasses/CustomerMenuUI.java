@@ -13,12 +13,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import resourceallocationsoftware.ModelClasses.Customer;
 /**
  *
  * @author shanu
  */
 public class CustomerMenuUI extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form CustomerMenuUI
      */
@@ -1120,7 +1121,10 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    private Customer customer;
+    
+    public void showCustomerMenu(Customer customer){
+        this.customer = customer;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
