@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import resourceallocationsoftware.ModelClasses.Admin;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.swing.JScrollPane;
  */
 public class AdminUI extends javax.swing.JFrame {
 
+    private Admin admin;
+    
     /**
      * Creates new form AdminUI
      */
@@ -27,6 +30,7 @@ public class AdminUI extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         initMoving(AdminUI.this);
+        
         
         bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
         bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
@@ -55,13 +59,14 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        nicLabel = new RoundLabel(20, 20, 20, 20);
         jPanel2 = new RoundPanel(30, 30, 30, 30);
         jPanel4 = new RoundPanel(30, 30, 30, 30);
         jLabel1 = new RoundLabel(30, 30, 30, 30);
         jPanel8 = new RoundPanel(30, 30, 30, 30);
         jPanel9 = new RoundPanel(20, 20, 20, 20);
         jLabel6 = new javax.swing.JLabel();
-        loginIdTextField3 = new javax.swing.JTextField();
+        hallNoTf = new javax.swing.JTextField();
         jPanel10 = new RoundPanel(30, 30, 30, 30);
         jPanel11 = new RoundPanel(20, 20, 20, 20);
         jLabel7 = new javax.swing.JLabel();
@@ -136,17 +141,24 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel4.setText("menu");
         jLabel4.setToolTipText("");
 
+        nicLabel.setBackground(new java.awt.Color(57, 72, 103));
+        nicLabel.setFont(new java.awt.Font("Poppins", 1, 8)); // NOI18N
+        nicLabel.setForeground(new java.awt.Color(247, 251, 255));
+        nicLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nicLabel.setToolTipText("");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +169,9 @@ public class AdminUI extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
 
         jPanel2.setBackground(new java.awt.Color(228, 232, 235));
@@ -191,34 +205,34 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel6.setText("Hall no");
         jLabel6.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField3.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField3.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField3.setToolTipText("");
-        loginIdTextField3.setActionCommand("<Not Set>");
-        loginIdTextField3.setBorder(null);
-        loginIdTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        hallNoTf.setBackground(new java.awt.Color(247, 251, 255));
+        hallNoTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        hallNoTf.setForeground(new java.awt.Color(67, 67, 67));
+        hallNoTf.setToolTipText("");
+        hallNoTf.setActionCommand("<Not Set>");
+        hallNoTf.setBorder(null);
+        hallNoTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusGained(evt);
+                hallNoTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusLost(evt);
+                hallNoTfFocusLost(evt);
             }
         });
-        loginIdTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+        hallNoTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseClicked(evt);
+                hallNoTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseEntered(evt);
+                hallNoTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseExited(evt);
+                hallNoTfMouseExited(evt);
             }
         });
-        loginIdTextField3.addActionListener(new java.awt.event.ActionListener() {
+        hallNoTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField3ActionPerformed(evt);
+                hallNoTfActionPerformed(evt);
             }
         });
 
@@ -229,7 +243,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(hallNoTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -240,7 +254,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hallNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -1058,38 +1072,38 @@ public class AdminUI extends javax.swing.JFrame {
         goBackBtn.setIcon(icon);
     }//GEN-LAST:event_goBackBtnMouseExited
 
-    private void loginIdTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusGained
+    private void hallNoTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusGained
         jPanel8.setBackground(new Color(57, 72, 103));
         jLabel6.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField3FocusGained
+    }//GEN-LAST:event_hallNoTfFocusGained
 
-    private void loginIdTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusLost
+    private void hallNoTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusLost
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         
-    }//GEN-LAST:event_loginIdTextField3FocusLost
+    }//GEN-LAST:event_hallNoTfFocusLost
 
-    private void loginIdTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseClicked
+    private void hallNoTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField3MouseClicked
+    }//GEN-LAST:event_hallNoTfMouseClicked
 
-    private void loginIdTextField3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseEntered
+    private void hallNoTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField3MouseEntered
+    }//GEN-LAST:event_hallNoTfMouseEntered
 
-    private void loginIdTextField3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseExited
+    private void hallNoTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         
 
-    }//GEN-LAST:event_loginIdTextField3MouseExited
+    }//GEN-LAST:event_hallNoTfMouseExited
 
-    private void loginIdTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField3ActionPerformed
+    private void hallNoTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hallNoTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField3ActionPerformed
+    }//GEN-LAST:event_hallNoTfActionPerformed
 
     private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
         jPanel8.setBackground(new Color(57,72,103));
@@ -1338,11 +1352,15 @@ public class AdminUI extends javax.swing.JFrame {
         bookingSearchBtn.setBackground(new Color(57,72,103));
         bookingSearchBtn.setForeground(new Color(155,164,181));
     }//GEN-LAST:event_bookingSearchBtnMouseExited
-
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void getAdminUI(Admin admin) {
+        
+        this.admin = admin;
+        nicLabel.setText(admin.getNic());
+        this.setVisible(true);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1367,11 +1385,11 @@ public class AdminUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdminUI().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AdminUI().setVisible(true);
+//            }
+//        });
     }
     
     private int x;
@@ -1410,6 +1428,7 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel goBackBtn;
     private resourceallocationsoftware.ViewClasses.Table.Table hallData;
+    private javax.swing.JTextField hallNoTf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1451,10 +1470,10 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField loginIdTextField3;
     private javax.swing.JTextField loginIdTextField4;
     private javax.swing.JTextField loginIdTextField5;
     private javax.swing.JLabel minimizeBtn;
+    private javax.swing.JLabel nicLabel;
     private javax.swing.JPanel panelMoving;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables

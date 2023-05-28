@@ -12,13 +12,17 @@ import java.util.logging.Logger;
  * @author shanu
  */
 public class DatabaseHandler {
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    PreparedStatement pstmt;
     public static String URL = "jdbc:mysql://localhost:3306/hallmanager";
+    
     public DatabaseHandler(){
         
     }
     
     public Connection getConnection() throws Exception{
-        Connection con = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         con = DriverManager.getConnection(URL,"root","");
         System.out.println("Connection Established...");
@@ -28,9 +32,9 @@ public class DatabaseHandler {
     
     public Statement getStatement(){
         
-        Statement stmt = null;
         try {
             stmt = getConnection().createStatement();
+            System.out.println("Statement returned..");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -38,7 +42,34 @@ public class DatabaseHandler {
         
     }
     
+    public PreparedStatement getPreparedStatement(String query){
+        try {
+            pstmt = getConnection().prepareStatement(query);
+            System.out.println("PreparedStatement returned..");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return pstmt;
+    }
     
+    public ResultSet getResult(String query){
+        try {
+            rs = getStatement().executeQuery(query);
+            System.out.println("ResultSet returned..");
+        
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return rs;
+    }
     
+    public void closeConnection(){
+        try {
+            con.close();
+            System.out.println("Connection closed");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     
 }

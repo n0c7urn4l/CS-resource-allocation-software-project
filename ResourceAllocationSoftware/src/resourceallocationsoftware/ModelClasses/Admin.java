@@ -38,6 +38,8 @@ public class Admin extends User{
     public Admin(String nic, String name, Login login) {
         super(nic, name, login);
     }
+    
+    
 
     @Override
     public void createLogin() {

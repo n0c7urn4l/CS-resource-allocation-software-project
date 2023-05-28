@@ -12,15 +12,15 @@ package resourceallocationsoftware.ModelClasses;
 //finish autehnticate method
 public class Login {
     
-    private AuthorityLevel authorityLevel;
+    private int authorityLevel;
     private String userName;
     private String password;
 
-    public AuthorityLevel getAuthorityLevel() {
+    public int getAuthorityLevel() {
         return authorityLevel;
     }
 
-    public void setAuthorityLevel(AuthorityLevel authorityLevel) {
+    public void setAuthorityLevel(int authorityLevel) {
         this.authorityLevel = authorityLevel;
     }
 
@@ -40,7 +40,7 @@ public class Login {
         this.password = password;
     }
 
-    public Login(AuthorityLevel authorityLevel, String userName, String password) {
+    public Login(int authorityLevel, String userName, String password) {
         this.authorityLevel = authorityLevel;
         this.userName = userName;
         this.password = password;

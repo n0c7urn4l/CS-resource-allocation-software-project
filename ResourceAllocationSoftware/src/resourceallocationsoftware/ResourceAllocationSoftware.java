@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
 import java.sql.*;
+import resourceallocationsoftware.ModelClasses.Login;
+import resourceallocationsoftware.ViewClasses.*;
 
 
 /**
@@ -22,17 +24,17 @@ public class ResourceAllocationSoftware {
      */
     public static void main(String[] args) {
         
-        try {
-            ResultSet rs = new DatabaseHandler().getStatement().executeQuery("SELECT * FROM hall;");
-            while(rs.next()){
-                System.out.print(rs.getInt("hallNumber")+" ");
-                System.out.print(rs.getInt("capacity")+" ");
-                System.out.println(rs.getFloat("pricing"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
+//        try {
+//            ResultSet rs = new DatabaseHandler().getStatement().executeQuery("SELECT * FROM hall;");
+//            while(rs.next()){
+//                System.out.print(rs.getInt("hallNumber")+" ");
+//                System.out.print(rs.getInt("capacity")+" ");
+//                System.out.println(rs.getFloat("pricing"));
+//            }
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+        new LoginUI().getLoginUI();
        
         
     }

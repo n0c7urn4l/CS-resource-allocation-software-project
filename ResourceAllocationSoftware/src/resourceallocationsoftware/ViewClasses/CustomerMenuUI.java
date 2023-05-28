@@ -1123,8 +1123,8 @@ public class CustomerMenuUI extends javax.swing.JFrame {
      */
     private Customer customer;
     
-    public void showCustomerMenu(Customer customer){
-        this.customer = customer;
+    public static void main(String[] args){
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
