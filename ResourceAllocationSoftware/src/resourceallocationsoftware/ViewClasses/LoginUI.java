@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.border.*;
+import resourceallocationsoftware.ControllerClasses.*;
 
 /**
  *
@@ -21,6 +22,7 @@ public class LoginUI extends javax.swing.JFrame {
     public LoginUI() {
         initComponents();
         setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
+        
     }
 
     /**
@@ -38,7 +40,7 @@ public class LoginUI extends javax.swing.JFrame {
         jPanel8 = new RoundPanel(30, 30, 30, 30);
         jPanel9 = new RoundPanel(20, 20, 20, 20);
         jLabel6 = new javax.swing.JLabel();
-        loginIdTextField3 = new javax.swing.JTextField();
+        userNameTf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         adminRdBtn = new javax.swing.JRadioButton();
@@ -47,7 +49,7 @@ public class LoginUI extends javax.swing.JFrame {
         jPanel13 = new RoundPanel(20, 20, 20, 20);
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        pwTf = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         signUpButton = new javax.swing.JLabel();
         closeBtn = new RoundLabel(0, 0, 50, 0);
@@ -85,37 +87,37 @@ public class LoginUI extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(155, 164, 181));
-        jLabel6.setText("Nic");
+        jLabel6.setText("User name");
         jLabel6.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField3.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        loginIdTextField3.setForeground(new java.awt.Color(57, 72, 103));
-        loginIdTextField3.setToolTipText("");
-        loginIdTextField3.setActionCommand("<Not Set>");
-        loginIdTextField3.setBorder(null);
-        loginIdTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        userNameTf.setBackground(new java.awt.Color(247, 251, 255));
+        userNameTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        userNameTf.setForeground(new java.awt.Color(57, 72, 103));
+        userNameTf.setToolTipText("");
+        userNameTf.setActionCommand("<Not Set>");
+        userNameTf.setBorder(null);
+        userNameTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusGained(evt);
+                userNameTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusLost(evt);
+                userNameTfFocusLost(evt);
             }
         });
-        loginIdTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+        userNameTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseClicked(evt);
+                userNameTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseEntered(evt);
+                userNameTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseExited(evt);
+                userNameTfMouseExited(evt);
             }
         });
-        loginIdTextField3.addActionListener(new java.awt.event.ActionListener() {
+        userNameTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField3ActionPerformed(evt);
+                userNameTfActionPerformed(evt);
             }
         });
 
@@ -132,7 +134,7 @@ public class LoginUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -142,7 +144,7 @@ public class LoginUI extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(userNameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -166,6 +168,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         customerRdBtn.setFont(new java.awt.Font("Poppins", 1, 10)); // NOI18N
         customerRdBtn.setForeground(new java.awt.Color(155, 164, 181));
+        customerRdBtn.setSelected(true);
         customerRdBtn.setText("Customer");
         customerRdBtn.setPreferredSize(new java.awt.Dimension(80, 21));
         customerRdBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -199,16 +202,16 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_lock_30px_2.png"))); // NOI18N
 
-        jPasswordField1.setBackground(new java.awt.Color(247, 251, 255));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(57, 72, 103));
-        jPasswordField1.setBorder(null);
-        jPasswordField1.addMouseListener(new java.awt.event.MouseAdapter() {
+        pwTf.setBackground(new java.awt.Color(247, 251, 255));
+        pwTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        pwTf.setForeground(new java.awt.Color(57, 72, 103));
+        pwTf.setBorder(null);
+        pwTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPasswordField1MouseEntered(evt);
+                pwTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPasswordField1MouseExited(evt);
+                pwTfMouseExited(evt);
             }
         });
 
@@ -222,7 +225,7 @@ public class LoginUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pwTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -232,7 +235,7 @@ public class LoginUI extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pwTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -250,6 +253,11 @@ public class LoginUI extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 loginBtnMouseExited(evt);
+            }
+        });
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
             }
         });
 
@@ -375,13 +383,13 @@ public class LoginUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_closeBtnMousePressed
 
-    private void loginIdTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField3ActionPerformed
+    private void userNameTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTfActionPerformed
        
-    }//GEN-LAST:event_loginIdTextField3ActionPerformed
+    }//GEN-LAST:event_userNameTfActionPerformed
 
-    private void loginIdTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseClicked
+    private void userNameTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTfMouseClicked
         
-    }//GEN-LAST:event_loginIdTextField3MouseClicked
+    }//GEN-LAST:event_userNameTfMouseClicked
 
     private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
         jPanel8.setBackground(new Color(57,72,103));
@@ -397,34 +405,34 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel2.setIcon(icon);
     }//GEN-LAST:event_jPanel9MouseExited
 
-    private void loginIdTextField3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseEntered
+    private void userNameTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTfMouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px_1.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3MouseEntered
+    }//GEN-LAST:event_userNameTfMouseEntered
 
-    private void loginIdTextField3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseExited
+    private void userNameTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTfMouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px.png");
         jLabel2.setIcon(icon);
         
-    }//GEN-LAST:event_loginIdTextField3MouseExited
+    }//GEN-LAST:event_userNameTfMouseExited
 
-    private void loginIdTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusGained
+    private void userNameTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameTfFocusGained
         jPanel8.setBackground(new Color(57, 72, 103));
         jLabel6.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px_1.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3FocusGained
+    }//GEN-LAST:event_userNameTfFocusGained
 
-    private void loginIdTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusLost
+    private void userNameTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameTfFocusLost
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3FocusLost
+    }//GEN-LAST:event_userNameTfFocusLost
 
     private void adminRdBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminRdBtnActionPerformed
         if(customerRdBtn.isEnabled()){
@@ -456,19 +464,19 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel4.setIcon(icon);
     }//GEN-LAST:event_jPanel13MouseExited
 
-    private void jPasswordField1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MouseEntered
+    private void pwTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwTfMouseEntered
         jPanel12.setBackground(new Color(57,72,103));
         jLabel8.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_lock_30px_1.png");
         jLabel4.setIcon(icon);
-    }//GEN-LAST:event_jPasswordField1MouseEntered
+    }//GEN-LAST:event_pwTfMouseEntered
 
-    private void jPasswordField1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordField1MouseExited
+    private void pwTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwTfMouseExited
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_lock_30px_2.png");
         jLabel4.setIcon(icon);
-    }//GEN-LAST:event_jPasswordField1MouseExited
+    }//GEN-LAST:event_pwTfMouseExited
 
     private void signUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseEntered
         signUpButton.setText("<html><u>Don't have an account? Sign Up.</u></html>");
@@ -501,10 +509,28 @@ public class LoginUI extends javax.swing.JFrame {
         loginBtn.setForeground(new Color(247,251,255));
     }//GEN-LAST:event_loginBtnMouseEntered
 
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        int auth = 0;
+        String userName = userNameTf.getText();
+        String password = String.valueOf(pwTf.getPassword());
+        
+        if(adminRdBtn.isSelected()){
+            auth = 1;
+        }
+        else if(customerRdBtn.isSelected()){
+            auth = 2;
+        }
+        boolean flag = new LoginManager(userName, password, auth).authenticate();
+        if(flag){
+            this.dispose();
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void getLoginUI(){
+        this.setVisible(true);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -529,11 +555,11 @@ public class LoginUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginUI().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new LoginUI().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -552,9 +578,9 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JButton loginBtn;
-    private javax.swing.JTextField loginIdTextField3;
+    private javax.swing.JPasswordField pwTf;
     private javax.swing.JLabel signUpButton;
+    private javax.swing.JTextField userNameTf;
     // End of variables declaration//GEN-END:variables
 }
