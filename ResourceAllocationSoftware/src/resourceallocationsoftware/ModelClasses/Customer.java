@@ -8,9 +8,28 @@ package resourceallocationsoftware.ModelClasses;
  *
  * @author shanu
  */
-public class Customer {
+public class Customer extends User{
     
     protected String telephone;
+    
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+    
+    public Customer(String nic, String name, Login login, String telephone) {
+        super(nic, name, login);
+        this.telephone = telephone;
+    }
+
+
+    @Override
+    public void createLogin() {
+        
+    }
     
     
     

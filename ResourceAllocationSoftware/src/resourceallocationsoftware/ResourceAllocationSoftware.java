@@ -24,16 +24,6 @@ public class ResourceAllocationSoftware {
      */
     public static void main(String[] args) {
         
-//        try {
-//            ResultSet rs = new DatabaseHandler().getStatement().executeQuery("SELECT * FROM hall;");
-//            while(rs.next()){
-//                System.out.print(rs.getInt("hallNumber")+" ");
-//                System.out.print(rs.getInt("capacity")+" ");
-//                System.out.println(rs.getFloat("pricing"));
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
         new LoginUI().getLoginUI();
        
         

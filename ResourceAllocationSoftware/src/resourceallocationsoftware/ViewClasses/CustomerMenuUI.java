@@ -4,6 +4,7 @@
  */
 package resourceallocationsoftware.ViewClasses;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +14,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
 import resourceallocationsoftware.ModelClasses.Customer;
+import java.sql.*;
+import java.time.LocalDate;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 /**
  *
  * @author shanu
@@ -27,17 +35,10 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0,0,0,0));
         initMoving(this);
-        bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
-        
-    }
+        fetchHallData();
+        tableSelectionListener(hallTable);
+       
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,21 +54,22 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        nicLabel = new RoundLabel(20, 20, 20, 20);
         jPanel2 = new RoundPanel(30, 30, 30, 30);
         jPanel4 = new RoundPanel(30, 30, 30, 30);
         jLabel1 = new RoundLabel(30, 30, 30, 30);
         jPanel8 = new RoundPanel(30, 30, 30, 30);
         jPanel9 = new RoundPanel(20, 20, 20, 20);
         jLabel6 = new javax.swing.JLabel();
-        loginIdTextField3 = new javax.swing.JTextField();
+        hallNoTf = new javax.swing.JTextField();
         jPanel10 = new RoundPanel(30, 30, 30, 30);
         jPanel11 = new RoundPanel(20, 20, 20, 20);
         jLabel7 = new javax.swing.JLabel();
-        loginIdTextField4 = new javax.swing.JTextField();
+        capacityTf = new javax.swing.JTextField();
         jPanel12 = new RoundPanel(30, 30, 30, 30);
         jPanel13 = new RoundPanel(20, 20, 20, 20);
         jLabel8 = new javax.swing.JLabel();
-        loginIdTextField5 = new javax.swing.JTextField();
+        pricingTf = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         jPanel1 = new RoundPanel(20, 20, 20, 20);
@@ -81,7 +83,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jPanel5 = new RoundPanel(30, 30, 30, 30);
         jLabel9 = new RoundLabel(30, 30, 30, 30);
         jScrollPane2 = new javax.swing.JScrollPane();
-        table2 = new resourceallocationsoftware.ViewClasses.Table.Table();
+        hallTable = new resourceallocationsoftware.ViewClasses.Table.Table();
         jPanel6 = new RoundPanel(30, 30, 30, 30);
         jLabel10 = new RoundLabel(30, 30, 30, 30);
         jPanel15 = new RoundPanel(20, 20, 20, 20);
@@ -121,17 +123,24 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel4.setText("menu");
         jLabel4.setToolTipText("");
 
+        nicLabel.setBackground(new java.awt.Color(57, 72, 103));
+        nicLabel.setFont(new java.awt.Font("Poppins", 1, 10)); // NOI18N
+        nicLabel.setForeground(new java.awt.Color(247, 251, 255));
+        nicLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nicLabel.setToolTipText("");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nicLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +151,9 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         jPanel2.setBackground(new java.awt.Color(228, 232, 235));
@@ -176,35 +187,35 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel6.setText("Hall no");
         jLabel6.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField3.setEditable(false);
-        loginIdTextField3.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField3.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField3.setToolTipText("");
-        loginIdTextField3.setActionCommand("<Not Set>");
-        loginIdTextField3.setBorder(null);
-        loginIdTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        hallNoTf.setEditable(false);
+        hallNoTf.setBackground(new java.awt.Color(247, 251, 255));
+        hallNoTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        hallNoTf.setForeground(new java.awt.Color(155, 164, 181));
+        hallNoTf.setToolTipText("");
+        hallNoTf.setActionCommand("<Not Set>");
+        hallNoTf.setBorder(null);
+        hallNoTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusGained(evt);
+                hallNoTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusLost(evt);
+                hallNoTfFocusLost(evt);
             }
         });
-        loginIdTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+        hallNoTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseClicked(evt);
+                hallNoTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseEntered(evt);
+                hallNoTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseExited(evt);
+                hallNoTfMouseExited(evt);
             }
         });
-        loginIdTextField3.addActionListener(new java.awt.event.ActionListener() {
+        hallNoTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField3ActionPerformed(evt);
+                hallNoTfActionPerformed(evt);
             }
         });
 
@@ -215,7 +226,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(hallNoTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -226,7 +237,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hallNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -253,35 +264,35 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel7.setText("Capacity");
         jLabel7.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField4.setEditable(false);
-        loginIdTextField4.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField4.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField4.setToolTipText("");
-        loginIdTextField4.setActionCommand("<Not Set>");
-        loginIdTextField4.setBorder(null);
-        loginIdTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        capacityTf.setEditable(false);
+        capacityTf.setBackground(new java.awt.Color(247, 251, 255));
+        capacityTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        capacityTf.setForeground(new java.awt.Color(155, 164, 181));
+        capacityTf.setToolTipText("");
+        capacityTf.setActionCommand("<Not Set>");
+        capacityTf.setBorder(null);
+        capacityTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField4FocusGained(evt);
+                capacityTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField4FocusLost(evt);
+                capacityTfFocusLost(evt);
             }
         });
-        loginIdTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
+        capacityTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseClicked(evt);
+                capacityTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseEntered(evt);
+                capacityTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseExited(evt);
+                capacityTfMouseExited(evt);
             }
         });
-        loginIdTextField4.addActionListener(new java.awt.event.ActionListener() {
+        capacityTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField4ActionPerformed(evt);
+                capacityTfActionPerformed(evt);
             }
         });
 
@@ -292,7 +303,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(capacityTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -303,7 +314,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(capacityTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -330,35 +341,35 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel8.setText("Pricing");
         jLabel8.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField5.setEditable(false);
-        loginIdTextField5.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField5.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField5.setToolTipText("");
-        loginIdTextField5.setActionCommand("<Not Set>");
-        loginIdTextField5.setBorder(null);
-        loginIdTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+        pricingTf.setEditable(false);
+        pricingTf.setBackground(new java.awt.Color(247, 251, 255));
+        pricingTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pricingTf.setForeground(new java.awt.Color(155, 164, 181));
+        pricingTf.setToolTipText("");
+        pricingTf.setActionCommand("<Not Set>");
+        pricingTf.setBorder(null);
+        pricingTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField5FocusGained(evt);
+                pricingTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField5FocusLost(evt);
+                pricingTfFocusLost(evt);
             }
         });
-        loginIdTextField5.addMouseListener(new java.awt.event.MouseAdapter() {
+        pricingTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseClicked(evt);
+                pricingTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseEntered(evt);
+                pricingTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseExited(evt);
+                pricingTfMouseExited(evt);
             }
         });
-        loginIdTextField5.addActionListener(new java.awt.event.ActionListener() {
+        pricingTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField5ActionPerformed(evt);
+                pricingTfActionPerformed(evt);
             }
         });
 
@@ -369,7 +380,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(pricingTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -380,7 +391,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pricingTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -584,8 +595,8 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(57, 72, 103));
         jLabel9.setText("Hall Data");
 
-        table2.setForeground(new java.awt.Color(155, 164, 181));
-        table2.setModel(new javax.swing.table.DefaultTableModel(
+        hallTable.setForeground(new java.awt.Color(155, 164, 181));
+        hallTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -601,11 +612,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        table2.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
-        table2.setSelectionBackground(new java.awt.Color(57, 72, 103));
-        table2.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        table2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(table2);
+        hallTable.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        hallTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
+        hallTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        hallTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(hallTable);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -852,37 +863,37 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginIdTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusGained
+    private void hallNoTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusGained
         jPanel8.setBackground(new Color(57, 72, 103));
         jLabel6.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField3FocusGained
+    }//GEN-LAST:event_hallNoTfFocusGained
 
-    private void loginIdTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusLost
+    private void hallNoTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusLost
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField3FocusLost
+    }//GEN-LAST:event_hallNoTfFocusLost
 
-    private void loginIdTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseClicked
+    private void hallNoTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField3MouseClicked
+    }//GEN-LAST:event_hallNoTfMouseClicked
 
-    private void loginIdTextField3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseEntered
+    private void hallNoTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField3MouseEntered
+    }//GEN-LAST:event_hallNoTfMouseEntered
 
-    private void loginIdTextField3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseExited
+    private void hallNoTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField3MouseExited
+    }//GEN-LAST:event_hallNoTfMouseExited
 
-    private void loginIdTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField3ActionPerformed
+    private void hallNoTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hallNoTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField3ActionPerformed
+    }//GEN-LAST:event_hallNoTfActionPerformed
 
     private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
         jPanel8.setBackground(new Color(57,72,103));
@@ -896,37 +907,37 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel9MouseExited
 
-    private void loginIdTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField4FocusGained
+    private void capacityTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusGained
         jPanel10.setBackground(new Color(57, 72, 103));
         jLabel7.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField4FocusGained
+    }//GEN-LAST:event_capacityTfFocusGained
 
-    private void loginIdTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField4FocusLost
+    private void capacityTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusLost
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField4FocusLost
+    }//GEN-LAST:event_capacityTfFocusLost
 
-    private void loginIdTextField4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseClicked
+    private void capacityTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField4MouseClicked
+    }//GEN-LAST:event_capacityTfMouseClicked
 
-    private void loginIdTextField4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseEntered
+    private void capacityTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseEntered
         jPanel10.setBackground(new Color(57,72,103));
         jLabel7.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField4MouseEntered
+    }//GEN-LAST:event_capacityTfMouseEntered
 
-    private void loginIdTextField4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseExited
+    private void capacityTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseExited
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField4MouseExited
+    }//GEN-LAST:event_capacityTfMouseExited
 
-    private void loginIdTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField4ActionPerformed
+    private void capacityTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capacityTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField4ActionPerformed
+    }//GEN-LAST:event_capacityTfActionPerformed
 
     private void jPanel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseEntered
         jPanel10.setBackground(new Color(57,72,103));
@@ -940,37 +951,37 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel11MouseExited
 
-    private void loginIdTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField5FocusGained
+    private void pricingTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusGained
         jPanel12.setBackground(new Color(57, 72, 103));
         jLabel8.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField5FocusGained
+    }//GEN-LAST:event_pricingTfFocusGained
 
-    private void loginIdTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField5FocusLost
+    private void pricingTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusLost
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField5FocusLost
+    }//GEN-LAST:event_pricingTfFocusLost
 
-    private void loginIdTextField5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseClicked
+    private void pricingTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField5MouseClicked
+    }//GEN-LAST:event_pricingTfMouseClicked
 
-    private void loginIdTextField5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseEntered
+    private void pricingTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseEntered
         jPanel12.setBackground(new Color(57,72,103));
         jLabel8.setForeground(new Color(57,72,103));
 
-    }//GEN-LAST:event_loginIdTextField5MouseEntered
+    }//GEN-LAST:event_pricingTfMouseEntered
 
-    private void loginIdTextField5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseExited
+    private void pricingTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseExited
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
 
-    }//GEN-LAST:event_loginIdTextField5MouseExited
+    }//GEN-LAST:event_pricingTfMouseExited
 
-    private void loginIdTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField5ActionPerformed
+    private void pricingTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pricingTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField5ActionPerformed
+    }//GEN-LAST:event_pricingTfActionPerformed
 
     private void jPanel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseEntered
         jPanel12.setBackground(new Color(57,72,103));
@@ -1123,7 +1134,12 @@ public class CustomerMenuUI extends javax.swing.JFrame {
      */
     private Customer customer;
     
-    public static void main(String[] args){
+    public void getCustomerMenuUI(Customer customer){
+        this.setVisible(true);
+        this.customer = customer;
+        nicLabel.setText(customer.getNic());
+        fetchBookingData();
+        
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1149,11 +1165,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CustomerMenuUI().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new CustomerMenuUI().setVisible(true);
+//            }
+//        });
     }
     
     
@@ -1178,14 +1194,100 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         
         
     }
+    
+    private void fetchHallData(){
+        try{
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            PreparedStatement pstmt = dbHandler.getPreparedStatement("select * from hall");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int hallNumber = rs.getInt("hallNumber");
+                int capacity = rs.getInt("capacity");
+                double pricing = rs.getFloat("pricing");
+                
+                hallTable.addRow(new Object[]{hallNumber,capacity,pricing});
+            }
+            dbHandler.closeConnection();
+            System.out.println("Hall data added");
+        }catch(Exception e){
+            
+        }
+        
+        
+    }
+    
+    private void fetchBookingData(){
+        
+        int bookingId;
+        int customerId = 0;
+        int hallNo;
+        Date date;
+        int paymentId;
+        
+        try{
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            PreparedStatement pstmt = dbHandler.getPreparedStatement("select customerId from customer where userId = ?");
+            pstmt.setInt(1, customer.getUserId());
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                customerId = rs.getInt("customerId");
+            }
+            pstmt = dbHandler.getPreparedStatement("select bookingId,hallNumber,date,paymentId from booking where customerId = ?");
+            pstmt.setInt(1, customerId);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                bookingId = rs.getInt("bookingId");
+                hallNo = rs.getInt("hallNumber");
+                date = rs.getDate("date");
+                paymentId = rs.getInt("paymentId");
+                bookingTable.addRow(new Object[]{bookingId,hallNo,date,paymentId});
+            }
+            dbHandler.closeConnection();
+            System.out.println("Booking data added");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    private void tableSelectionListener(JTable table){
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int rowIndex = table.getSelectedRow();
+
+                    for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+                        Object value = table.getValueAt(rowIndex, columnIndex);
+                        
+                        if(table.getColumnCount() == 3){
+                            if(columnIndex == 0){
+                                hallNoTf.setText(String.valueOf(value));
+                                System.out.println("column 0: "+value);
+                            }else if(columnIndex == 1){
+                                capacityTf.setText(String.valueOf(value));
+                                System.out.println("column 1: "+value);
+                            }else if(columnIndex == 2){
+                                pricingTf.setText(String.valueOf(value));
+                                System.out.println("column 2: "+value);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton bookingSearchBtn;
     private resourceallocationsoftware.ViewClasses.Table.Table bookingTable;
+    private javax.swing.JTextField capacityTf;
     private javax.swing.JLabel closeBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel goBackBtn;
+    private javax.swing.JTextField hallNoTf;
+    private resourceallocationsoftware.ViewClasses.Table.Table hallTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1217,15 +1319,13 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField loginIdTextField3;
-    private javax.swing.JTextField loginIdTextField4;
-    private javax.swing.JTextField loginIdTextField5;
     private javax.swing.JTextField loginIdTextField6;
     private javax.swing.JLabel minimizeBtn;
+    private javax.swing.JLabel nicLabel;
     private radio_button.RadioButtonCustom oneTimeRdb;
     private javax.swing.JPanel panelMoving;
     private radio_button.RadioButtonCustom periodicRdb;
+    private javax.swing.JTextField pricingTf;
     private radio_button.RadioButtonCustom recurringRdb;
-    private resourceallocationsoftware.ViewClasses.Table.Table table2;
     // End of variables declaration//GEN-END:variables
 }
