@@ -13,6 +13,7 @@ public abstract class User{
     protected String nic;
     protected String name;
     protected Login login;
+    protected int userId;
     
 
     public String getNic(){
@@ -31,6 +32,13 @@ public abstract class User{
         this.name = name;
     }
     
+    public void setUserId(int userId){
+        this.userId = userId;
+    }
+    
+    public int getUserId(){
+        return userId;
+    }
 
     public User(String nic, String name, Login login) {
         this.nic = nic;

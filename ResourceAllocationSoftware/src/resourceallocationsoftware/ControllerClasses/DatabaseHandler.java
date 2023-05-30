@@ -6,6 +6,7 @@ package resourceallocationsoftware.ControllerClasses;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,9 +23,15 @@ public class DatabaseHandler {
         
     }
     
-    public Connection getConnection() throws Exception{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        con = DriverManager.getConnection(URL,"root","");
+    public Connection getConnection(){
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL,"root","");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Database connection failed!", "Login Error", JOptionPane.ERROR_MESSAGE);
+        }
         System.out.println("Connection Established...");
         return con;
         
@@ -37,6 +44,7 @@ public class DatabaseHandler {
             System.out.println("Statement returned..");
         } catch (Exception ex) {
             ex.printStackTrace();
+            
         }
         return stmt;
         
