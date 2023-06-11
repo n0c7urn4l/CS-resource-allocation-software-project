@@ -5,7 +5,13 @@
 package resourceallocationsoftware.ModelClasses;
 
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,29 +21,42 @@ import java.time.LocalDate;
 public class SpecificDayBooking extends Booking{
     protected LocalDate startingDate;
     protected LocalDate endDate;
-    protected DayOfWeek dayOfWeek;
+//    protected DayOfWeek dayOfWeek;
     
     public LocalDate getStartingDate() {
         return startingDate;
     }
 
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
+    public void setStartingDate(Date startingDate) {
+        Instant instant = startingDate.toInstant();
+        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+        this.startingDate = zdt.toLocalDate();
     }
 
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) {
+        Instant instant = endDate.toInstant();
+        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+        this.endDate = zdt.toLocalDate();
     }
     
-    public SpecificDayBooking(String bookingId, Hall hall, Payment payment, Customer customer) {
-        super(bookingId, hall, payment, customer);
+    public SpecificDayBooking() {
+        super();
+        
     }
 
-    public static void calcDate(){
-        
+    public List<LocalDate> getRecurringDateList(){
+        DayOfWeek day = startingDate.getDayOfWeek();
+        List<LocalDate> dateList = new ArrayList();
+        for (LocalDate d = startingDate; !d.isAfter(endDate); d = d.plusDays(1)) {
+            if(d.getDayOfWeek().equals(day)){
+                dateList.add(d);
+            }
+        }
+        System.out.println("Recurring dates fetched..");
+        return dateList;
     }
 }

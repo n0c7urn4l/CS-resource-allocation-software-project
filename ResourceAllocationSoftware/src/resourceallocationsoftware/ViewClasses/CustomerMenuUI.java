@@ -4,7 +4,6 @@
  */
 package resourceallocationsoftware.ViewClasses;
 
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,33 +11,51 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
 import resourceallocationsoftware.ModelClasses.Customer;
 import java.sql.*;
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import resourceallocationsoftware.ControllerClasses.BookingManager;
+import resourceallocationsoftware.ModelClasses.OneTimeBooking;
+import resourceallocationsoftware.ModelClasses.PeriodicBooking;
+import resourceallocationsoftware.ModelClasses.SpecificDayBooking;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author shanu
  */
 public class CustomerMenuUI extends javax.swing.JFrame {
     
+    private Customer customer;
+    private List<Date> dateList = new ArrayList();
+    private BookingManager bm;
+    private OneTimeBooking otb;
+    private PeriodicBooking pb;
+    private SpecificDayBooking sdb;
+
     /**
-     * Creates new form CustomerMenuUI
+     * Creates new form CustomerUITest
      */
     public CustomerMenuUI() {
         initComponents();
         setBackground(new Color(0,0,0,0));
         initMoving(this);
+        mainUI.setVisible(true);
         fetchHallData();
-        tableSelectionListener(hallTable);
-       
-   }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,14 +66,19 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        oneTimeDate = new com.raven.datechooser.DateChooser();
         panelMoving = new RoundPanel(50, 50, 50, 50);
+        closeBtn = new RoundLabel(0, 0, 50, 0);
+        minimizeBtn = new RoundLabel(0, 0, 50, 0);
+        goBackBtn = new RoundLabel(0, 0, 50, 0);
         jPanel3 = new RoundPanel(50, 50, 0, 0);
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         nicLabel = new RoundLabel(20, 20, 20, 20);
         jPanel2 = new RoundPanel(30, 30, 30, 30);
-        jPanel4 = new RoundPanel(30, 30, 30, 30);
+        mainUI = new RoundPanel(30, 30, 30, 30);
+        jPanel5 = new RoundPanel(30, 30, 30, 30);
         jLabel1 = new RoundLabel(30, 30, 30, 30);
         jPanel8 = new RoundPanel(30, 30, 30, 30);
         jPanel9 = new RoundPanel(20, 20, 20, 20);
@@ -80,29 +102,104 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         oneTimeRdb = new radio_button.RadioButtonCustom();
         periodicRdb = new radio_button.RadioButtonCustom();
         recurringRdb = new radio_button.RadioButtonCustom();
-        jPanel5 = new RoundPanel(30, 30, 30, 30);
+        jPanel6 = new RoundPanel(30, 30, 30, 30);
         jLabel9 = new RoundLabel(30, 30, 30, 30);
         jScrollPane2 = new javax.swing.JScrollPane();
         hallTable = new resourceallocationsoftware.ViewClasses.Table.Table();
-        jPanel6 = new RoundPanel(30, 30, 30, 30);
+        jPanel7 = new RoundPanel(30, 30, 30, 30);
         jLabel10 = new RoundLabel(30, 30, 30, 30);
         jPanel15 = new RoundPanel(20, 20, 20, 20);
         jPanel17 = new RoundPanel(10, 10, 10, 10);
-        jPanel7 = new RoundPanel(30, 30, 30, 30);
+        jPanel16 = new RoundPanel(30, 30, 30, 30);
         jLabel11 = new RoundLabel(30, 30, 30, 30);
         jLabel17 = new javax.swing.JLabel();
         bookingSearchBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bookingTable = new resourceallocationsoftware.ViewClasses.Table.Table();
-        closeBtn = new RoundLabel(0, 0, 50, 0);
-        goBackBtn = new RoundLabel(0, 0, 50, 0);
-        minimizeBtn = new RoundLabel(0, 0, 50, 0);
+        oneTimeUI = new RoundPanel(30, 30, 30, 30);
+        jPanel24 = new RoundPanel(20, 20, 20, 20);
+        oneTimeDateTf = new textfield.TextField();
+        oneTimeUIOkBtn = new javax.swing.JButton();
+        oneTimeUICancelBtn = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        periodicUI = new RoundPanel(30, 30, 30, 30);
+        jPanel18 = new RoundPanel(20, 20, 20, 20);
+        startingDateTf = new textfield.TextField();
+        bookingSearchBtn3 = new javax.swing.JButton();
+        bookingSearchBtn4 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        endDateTf = new textfield.TextField();
+        recurringUI = new RoundPanel(30, 30, 30, 30);
+        jPanel19 = new RoundPanel(20, 20, 20, 20);
+        startingDateTf1 = new textfield.TextField();
+        okBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        endDateTf1 = new textfield.TextField();
+
+        oneTimeDate.setBackground(new java.awt.Color(247, 251, 255));
+        oneTimeDate.setForeground(new java.awt.Color(57, 72, 103));
+        oneTimeDate.setDateFormat("dd-MMMM-yyyy");
+        oneTimeDate.setTextRefernce(oneTimeDateTf);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         panelMoving.setBackground(new java.awt.Color(57, 72, 103));
-        panelMoving.setPreferredSize(new java.awt.Dimension(1200, 800));
+
+        closeBtn.setBackground(new java.awt.Color(57, 72, 103));
+        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        closeBtn.setForeground(new java.awt.Color(228, 232, 235));
+        closeBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        closeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_cancel_20px_2.png"))); // NOI18N
+        closeBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        closeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                closeBtnMouseExited(evt);
+            }
+        });
+
+        minimizeBtn.setBackground(new java.awt.Color(57, 72, 103));
+        minimizeBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        minimizeBtn.setForeground(new java.awt.Color(228, 232, 235));
+        minimizeBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_macos_minimize_20px_1.png"))); // NOI18N
+        minimizeBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        minimizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseExited(evt);
+            }
+        });
+
+        goBackBtn.setBackground(new java.awt.Color(57, 72, 103));
+        goBackBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        goBackBtn.setForeground(new java.awt.Color(228, 232, 235));
+        goBackBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        goBackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_go_back_20px.png"))); // NOI18N
+        goBackBtn.setPreferredSize(new java.awt.Dimension(25, 25));
+        goBackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                goBackBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                goBackBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                goBackBtnMouseExited(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(57, 72, 103));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 800));
@@ -151,15 +248,19 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 590, Short.MAX_VALUE)
                 .addComponent(nicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
         jPanel2.setBackground(new java.awt.Color(228, 232, 235));
         jPanel2.setPreferredSize(new java.awt.Dimension(1075, 750));
+        jPanel2.setLayout(new java.awt.CardLayout());
 
-        jPanel4.setBackground(new java.awt.Color(247, 251, 255));
+        mainUI.setBackground(new java.awt.Color(228, 232, 235));
+        mainUI.setPreferredSize(new java.awt.Dimension(1075, 750));
+
+        jPanel5.setBackground(new java.awt.Color(247, 251, 255));
 
         jLabel1.setBackground(new java.awt.Color(247, 251, 255));
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
@@ -409,6 +510,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 addBtnMouseExited(evt);
             }
         });
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setBackground(new java.awt.Color(57, 72, 103));
         deleteBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -422,9 +528,13 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 deleteBtnMouseExited(evt);
             }
         });
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setPreferredSize(new java.awt.Dimension(211, 186));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
 
         jPanel14.setBackground(new java.awt.Color(247, 251, 255));
@@ -543,36 +653,36 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
         jPanel1.add(jPanel14);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(deleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28))))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -580,7 +690,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                         .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -588,7 +698,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 .addGap(72, 72, 72))
         );
 
-        jPanel5.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel6.setBackground(new java.awt.Color(247, 251, 255));
 
         jLabel9.setBackground(new java.awt.Color(247, 251, 255));
         jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
@@ -616,22 +726,27 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         hallTable.setSelectionBackground(new java.awt.Color(57, 72, 103));
         hallTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
         hallTable.getTableHeader().setReorderingAllowed(false);
+        hallTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hallTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(hallTable);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -640,7 +755,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
         jScrollPane2.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
-        jPanel6.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel7.setBackground(new java.awt.Color(247, 251, 255));
 
         jLabel10.setBackground(new java.awt.Color(247, 251, 255));
         jLabel10.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
@@ -648,7 +763,6 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         jLabel10.setText("Customer Data");
 
         jPanel15.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel15.setPreferredSize(new java.awt.Dimension(360, 212));
         jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
 
         jPanel17.setBackground(new java.awt.Color(247, 251, 255));
@@ -667,20 +781,20 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 
         jPanel15.add(jPanel17);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -688,20 +802,20 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(247, 251, 255));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel16.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setBackground(new java.awt.Color(247, 251, 255));
         jLabel11.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(57, 72, 103));
         jLabel11.setText("Booking Details");
-        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 0, 150, -1));
+        jPanel16.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 0, 150, -1));
 
         jLabel17.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(155, 164, 181));
         jLabel17.setText("Date");
         jLabel17.setPreferredSize(new java.awt.Dimension(70, 18));
-        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 51, 23));
+        jPanel16.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 51, 23));
 
         bookingSearchBtn.setBackground(new java.awt.Color(57, 72, 103));
         bookingSearchBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -715,7 +829,12 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 bookingSearchBtnMouseExited(evt);
             }
         });
-        jPanel7.add(bookingSearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 84, 40));
+        bookingSearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookingSearchBtnActionPerformed(evt);
+            }
+        });
+        jPanel16.add(bookingSearchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 84, 40));
 
         bookingTable.setForeground(new java.awt.Color(155, 164, 181));
         bookingTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -741,93 +860,366 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         bookingTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(bookingTable);
 
-        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 590, 360));
+        jPanel16.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 590, 360));
         jScrollPane1.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainUILayout = new javax.swing.GroupLayout(mainUI);
+        mainUI.setLayout(mainUILayout);
+        mainUILayout.setHorizontalGroup(
+            mainUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainUILayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(mainUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(mainUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        mainUILayout.setVerticalGroup(
+            mainUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainUILayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(mainUILayout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(15, 15, 15)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainUILayout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21))
         );
 
-        closeBtn.setBackground(new java.awt.Color(57, 72, 103));
-        closeBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        closeBtn.setForeground(new java.awt.Color(228, 232, 235));
-        closeBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        closeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_cancel_20px_2.png"))); // NOI18N
-        closeBtn.setPreferredSize(new java.awt.Dimension(25, 25));
-        closeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                closeBtnMouseClicked(evt);
-            }
+        jPanel2.add(mainUI, "card2");
+
+        oneTimeUI.setBackground(new java.awt.Color(57, 72, 103));
+
+        jPanel24.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel24.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        jPanel24.setPreferredSize(new java.awt.Dimension(322, 179));
+
+        oneTimeDateTf.setForeground(new java.awt.Color(155, 164, 181));
+        oneTimeDateTf.setCaretColor(new java.awt.Color(155, 164, 181));
+        oneTimeDateTf.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        oneTimeDateTf.setLabelText("Date");
+        oneTimeDateTf.setLineColor(new java.awt.Color(57, 72, 103));
+        oneTimeDateTf.setSelectionColor(new java.awt.Color(57, 72, 103));
+
+        oneTimeUIOkBtn.setBackground(new java.awt.Color(57, 72, 103));
+        oneTimeUIOkBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        oneTimeUIOkBtn.setForeground(new java.awt.Color(155, 164, 181));
+        oneTimeUIOkBtn.setText("Ok");
+        oneTimeUIOkBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                closeBtnMouseEntered(evt);
+                oneTimeUIOkBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                closeBtnMouseExited(evt);
+                oneTimeUIOkBtnMouseExited(evt);
+            }
+        });
+        oneTimeUIOkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                oneTimeUIOkBtnActionPerformed(evt);
             }
         });
 
-        goBackBtn.setBackground(new java.awt.Color(57, 72, 103));
-        goBackBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        goBackBtn.setForeground(new java.awt.Color(228, 232, 235));
-        goBackBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        goBackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_go_back_20px.png"))); // NOI18N
-        goBackBtn.setPreferredSize(new java.awt.Dimension(25, 25));
-        goBackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                goBackBtnMouseClicked(evt);
-            }
+        oneTimeUICancelBtn.setBackground(new java.awt.Color(57, 72, 103));
+        oneTimeUICancelBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        oneTimeUICancelBtn.setForeground(new java.awt.Color(155, 164, 181));
+        oneTimeUICancelBtn.setText("Cancel");
+        oneTimeUICancelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                goBackBtnMouseEntered(evt);
+                oneTimeUICancelBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                goBackBtnMouseExited(evt);
+                oneTimeUICancelBtnMouseExited(evt);
+            }
+        });
+        oneTimeUICancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                oneTimeUICancelBtnActionPerformed(evt);
             }
         });
 
-        minimizeBtn.setBackground(new java.awt.Color(57, 72, 103));
-        minimizeBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        minimizeBtn.setForeground(new java.awt.Color(228, 232, 235));
-        minimizeBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_macos_minimize_20px_1.png"))); // NOI18N
-        minimizeBtn.setPreferredSize(new java.awt.Dimension(25, 25));
-        minimizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                minimizeBtnMouseClicked(evt);
-            }
+        jLabel12.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(57, 72, 103));
+        jLabel12.setText("Select Date");
+        jLabel12.setPreferredSize(new java.awt.Dimension(70, 18));
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(oneTimeDateTf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addComponent(oneTimeUICancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(oneTimeUIOkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(oneTimeDateTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(oneTimeUIOkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(oneTimeUICancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
+        );
+
+        javax.swing.GroupLayout oneTimeUILayout = new javax.swing.GroupLayout(oneTimeUI);
+        oneTimeUI.setLayout(oneTimeUILayout);
+        oneTimeUILayout.setHorizontalGroup(
+            oneTimeUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(oneTimeUILayout.createSequentialGroup()
+                .addGap(376, 376, 376)
+                .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(377, 377, 377))
+        );
+        oneTimeUILayout.setVerticalGroup(
+            oneTimeUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(oneTimeUILayout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(325, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(oneTimeUI, "card3");
+
+        periodicUI.setBackground(new java.awt.Color(57, 72, 103));
+
+        jPanel18.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel18.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        jPanel18.setPreferredSize(new java.awt.Dimension(322, 239));
+
+        startingDateTf.setForeground(new java.awt.Color(155, 164, 181));
+        startingDateTf.setCaretColor(new java.awt.Color(155, 164, 181));
+        startingDateTf.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        startingDateTf.setLabelText("Starting Date");
+        startingDateTf.setLineColor(new java.awt.Color(57, 72, 103));
+        startingDateTf.setSelectionColor(new java.awt.Color(57, 72, 103));
+
+        bookingSearchBtn3.setBackground(new java.awt.Color(57, 72, 103));
+        bookingSearchBtn3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        bookingSearchBtn3.setForeground(new java.awt.Color(155, 164, 181));
+        bookingSearchBtn3.setText("Ok");
+        bookingSearchBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                minimizeBtnMouseEntered(evt);
+                bookingSearchBtn3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                minimizeBtnMouseExited(evt);
+                bookingSearchBtn3MouseExited(evt);
             }
         });
+        bookingSearchBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookingSearchBtn3ActionPerformed(evt);
+            }
+        });
+
+        bookingSearchBtn4.setBackground(new java.awt.Color(57, 72, 103));
+        bookingSearchBtn4.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        bookingSearchBtn4.setForeground(new java.awt.Color(155, 164, 181));
+        bookingSearchBtn4.setText("Cancel");
+        bookingSearchBtn4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bookingSearchBtn4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bookingSearchBtn4MouseExited(evt);
+            }
+        });
+        bookingSearchBtn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookingSearchBtn4ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(57, 72, 103));
+        jLabel13.setText("Select Date");
+        jLabel13.setPreferredSize(new java.awt.Dimension(70, 18));
+
+        endDateTf.setForeground(new java.awt.Color(155, 164, 181));
+        endDateTf.setCaretColor(new java.awt.Color(155, 164, 181));
+        endDateTf.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        endDateTf.setLabelText("End Date");
+        endDateTf.setLineColor(new java.awt.Color(57, 72, 103));
+        endDateTf.setSelectionColor(new java.awt.Color(57, 72, 103));
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(startingDateTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                        .addComponent(bookingSearchBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(bookingSearchBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(endDateTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(startingDateTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(endDateTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bookingSearchBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookingSearchBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout periodicUILayout = new javax.swing.GroupLayout(periodicUI);
+        periodicUI.setLayout(periodicUILayout);
+        periodicUILayout.setHorizontalGroup(
+            periodicUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(periodicUILayout.createSequentialGroup()
+                .addGap(376, 376, 376)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(377, Short.MAX_VALUE))
+        );
+        periodicUILayout.setVerticalGroup(
+            periodicUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(periodicUILayout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(265, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(periodicUI, "card4");
+
+        recurringUI.setBackground(new java.awt.Color(57, 72, 103));
+
+        jPanel19.setBackground(new java.awt.Color(247, 251, 255));
+        jPanel19.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        jPanel19.setPreferredSize(new java.awt.Dimension(322, 239));
+
+        startingDateTf1.setForeground(new java.awt.Color(155, 164, 181));
+        startingDateTf1.setCaretColor(new java.awt.Color(155, 164, 181));
+        startingDateTf1.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        startingDateTf1.setLabelText("Starting Date");
+        startingDateTf1.setLineColor(new java.awt.Color(57, 72, 103));
+        startingDateTf1.setSelectionColor(new java.awt.Color(57, 72, 103));
+
+        okBtn.setBackground(new java.awt.Color(57, 72, 103));
+        okBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        okBtn.setForeground(new java.awt.Color(155, 164, 181));
+        okBtn.setText("Ok");
+        okBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                okBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                okBtnMouseExited(evt);
+            }
+        });
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setBackground(new java.awt.Color(57, 72, 103));
+        cancelBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(155, 164, 181));
+        cancelBtn.setText("Cancel");
+        cancelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancelBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancelBtnMouseExited(evt);
+            }
+        });
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Poppins SemiBold", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(57, 72, 103));
+        jLabel14.setText("Select Date");
+        jLabel14.setPreferredSize(new java.awt.Dimension(70, 18));
+
+        endDateTf1.setForeground(new java.awt.Color(155, 164, 181));
+        endDateTf1.setCaretColor(new java.awt.Color(155, 164, 181));
+        endDateTf1.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); // NOI18N
+        endDateTf1.setLabelText("End Date");
+        endDateTf1.setLineColor(new java.awt.Color(57, 72, 103));
+        endDateTf1.setSelectionColor(new java.awt.Color(57, 72, 103));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(startingDateTf1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(okBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(endDateTf1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startingDateTf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(endDateTf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(okBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout recurringUILayout = new javax.swing.GroupLayout(recurringUI);
+        recurringUI.setLayout(recurringUILayout);
+        recurringUILayout.setHorizontalGroup(
+            recurringUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recurringUILayout.createSequentialGroup()
+                .addGap(376, 376, 376)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        recurringUILayout.setVerticalGroup(
+            recurringUILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recurringUILayout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.add(recurringUI, "card5");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
@@ -835,26 +1227,29 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMovingLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelMovingLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 25, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMovingLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelMovingLayout.createSequentialGroup()
                 .addGroup(panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelMoving, java.awt.BorderLayout.CENTER);
@@ -863,16 +1258,47 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void minimizeBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseClicked
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_minimizeBtnMouseClicked
+
+    private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
+        Icon icon = new ImageIcon("src/icon/icons8_macos_minimize_20px.png");
+        minimizeBtn.setIcon(icon);
+    }//GEN-LAST:event_minimizeBtnMouseEntered
+
+    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
+        Icon icon = new ImageIcon("src/icon/icons8_macos_minimize_20px_1.png");
+        minimizeBtn.setIcon(icon);
+    }//GEN-LAST:event_minimizeBtnMouseExited
+
+    private void goBackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseClicked
+        this.dispose();
+        new LoginUI().setVisible(true);
+    }//GEN-LAST:event_goBackBtnMouseClicked
+
+    private void goBackBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseEntered
+        Icon icon = new ImageIcon("src/icon/icons8_go_back_20px_2.png");
+        goBackBtn.setIcon(icon);
+    }//GEN-LAST:event_goBackBtnMouseEntered
+
+    private void goBackBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseExited
+        Icon icon = new ImageIcon("src/icon/icons8_go_back_20px.png");
+        goBackBtn.setIcon(icon);
+    }//GEN-LAST:event_goBackBtnMouseExited
+
+    private void closeBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_closeBtnMouseClicked
+
     private void hallNoTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusGained
         jPanel8.setBackground(new Color(57, 72, 103));
         jLabel6.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_hallNoTfFocusGained
 
     private void hallNoTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallNoTfFocusLost
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_hallNoTfFocusLost
 
     private void hallNoTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseClicked
@@ -882,13 +1308,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void hallNoTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_hallNoTfMouseEntered
 
     private void hallNoTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallNoTfMouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_hallNoTfMouseExited
 
     private void hallNoTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hallNoTfActionPerformed
@@ -898,25 +1322,21 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_jPanel9MouseEntered
 
     private void jPanel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_jPanel9MouseExited
 
     private void capacityTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusGained
         jPanel10.setBackground(new Color(57, 72, 103));
         jLabel7.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_capacityTfFocusGained
 
     private void capacityTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusLost
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_capacityTfFocusLost
 
     private void capacityTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseClicked
@@ -926,13 +1346,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void capacityTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseEntered
         jPanel10.setBackground(new Color(57,72,103));
         jLabel7.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_capacityTfMouseEntered
 
     private void capacityTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseExited
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_capacityTfMouseExited
 
     private void capacityTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capacityTfActionPerformed
@@ -942,25 +1360,21 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void jPanel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseEntered
         jPanel10.setBackground(new Color(57,72,103));
         jLabel7.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_jPanel11MouseEntered
 
     private void jPanel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseExited
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_jPanel11MouseExited
 
     private void pricingTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusGained
         jPanel12.setBackground(new Color(57, 72, 103));
         jLabel8.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_pricingTfFocusGained
 
     private void pricingTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusLost
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_pricingTfFocusLost
 
     private void pricingTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseClicked
@@ -970,13 +1384,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void pricingTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseEntered
         jPanel12.setBackground(new Color(57,72,103));
         jLabel8.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_pricingTfMouseEntered
 
     private void pricingTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseExited
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_pricingTfMouseExited
 
     private void pricingTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pricingTfActionPerformed
@@ -986,13 +1398,11 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void jPanel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseEntered
         jPanel12.setBackground(new Color(57,72,103));
         jLabel8.setForeground(new Color(57,72,103));
-
     }//GEN-LAST:event_jPanel13MouseEntered
 
     private void jPanel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseExited
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
-
     }//GEN-LAST:event_jPanel13MouseExited
 
     private void addBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseEntered
@@ -1014,76 +1424,6 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         deleteBtn.setBackground(new Color(57,72,103));
         deleteBtn.setForeground(new Color(155,164,181));
     }//GEN-LAST:event_deleteBtnMouseExited
-
-    private void combobox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combobox1ActionPerformed
-
-    private void bookingSearchBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtnMouseEntered
-        bookingSearchBtn.setBackground(new Color(33, 42, 62));
-        bookingSearchBtn.setForeground(new Color(247,251,255));
-    }//GEN-LAST:event_bookingSearchBtnMouseEntered
-
-    private void bookingSearchBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtnMouseExited
-        bookingSearchBtn.setBackground(new Color(57,72,103));
-        bookingSearchBtn.setForeground(new Color(155,164,181));
-    }//GEN-LAST:event_bookingSearchBtnMouseExited
-
-    private void closeBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_closeBtnMouseClicked
-
-    private void closeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseEntered
-        Icon icon = new ImageIcon("src/icon/icons8_cancel_20px_6.png");
-        closeBtn.setIcon(icon);
-    }//GEN-LAST:event_closeBtnMouseEntered
-
-    private void closeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseExited
-        Icon icon = new ImageIcon("src/icon/icons8_cancel_20px_2.png");
-        closeBtn.setIcon(icon);
-    }//GEN-LAST:event_closeBtnMouseExited
-
-    private void goBackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseClicked
-        this.dispose();
-        new LoginUI().setVisible(true);
-    }//GEN-LAST:event_goBackBtnMouseClicked
-
-    private void goBackBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseEntered
-        Icon icon = new ImageIcon("src/icon/icons8_go_back_20px_2.png");
-        goBackBtn.setIcon(icon);
-    }//GEN-LAST:event_goBackBtnMouseEntered
-
-    private void goBackBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackBtnMouseExited
-        Icon icon = new ImageIcon("src/icon/icons8_go_back_20px.png");
-        goBackBtn.setIcon(icon);
-    }//GEN-LAST:event_goBackBtnMouseExited
-
-    private void minimizeBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseClicked
-        this.setState(Frame.ICONIFIED);
-
-    }//GEN-LAST:event_minimizeBtnMouseClicked
-
-    private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
-        Icon icon = new ImageIcon("src/icon/icons8_macos_minimize_20px.png");
-        minimizeBtn.setIcon(icon);
-    }//GEN-LAST:event_minimizeBtnMouseEntered
-
-    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
-        Icon icon = new ImageIcon("src/icon/icons8_macos_minimize_20px_1.png");
-        minimizeBtn.setIcon(icon);
-    }//GEN-LAST:event_minimizeBtnMouseExited
-
-    private void combobox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combobox2ActionPerformed
-
-    private void combobox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combobox3ActionPerformed
-
-    private void combobox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combobox4ActionPerformed
 
     private void loginIdTextField6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField6FocusGained
         // TODO add your handling code here:
@@ -1112,35 +1452,182 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private void oneTimeRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTimeRdbActionPerformed
         periodicRdb.setSelected(false);
         recurringRdb.setSelected(false);
-        new OneTimeUI().showWindow();
-           
+        mainUI.setVisible(false);
+        oneTimeUI.setVisible(true);
+
     }//GEN-LAST:event_oneTimeRdbActionPerformed
 
     private void periodicRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_periodicRdbActionPerformed
         oneTimeRdb.setSelected(false);
         recurringRdb.setSelected(false);
-        new PeriodicUI().showPeriodicUI();
+        mainUI.setVisible(false);
+        periodicUI.setVisible(true);
     }//GEN-LAST:event_periodicRdbActionPerformed
 
     private void recurringRdbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recurringRdbActionPerformed
         oneTimeRdb.setSelected(false);
         periodicRdb.setSelected(false);
-        new RecuringUI().showRecuringUI();
+        mainUI.setVisible(false);
+        recurringUI.setVisible(true);
+       
     }//GEN-LAST:event_recurringRdbActionPerformed
 
-    
+    private void bookingSearchBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtnMouseEntered
+        bookingSearchBtn.setBackground(new Color(33, 42, 62));
+        bookingSearchBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_bookingSearchBtnMouseEntered
+
+    private void bookingSearchBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtnMouseExited
+        bookingSearchBtn.setBackground(new Color(57,72,103));
+        bookingSearchBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_bookingSearchBtnMouseExited
+
+    private void bookingSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookingSearchBtnActionPerformed
+
+    }//GEN-LAST:event_bookingSearchBtnActionPerformed
+
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void oneTimeUIOkBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_oneTimeUIOkBtnMouseEntered
+        oneTimeUIOkBtn.setBackground(new Color(33, 42, 62));
+        oneTimeUIOkBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_oneTimeUIOkBtnMouseEntered
+
+    private void oneTimeUIOkBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_oneTimeUIOkBtnMouseExited
+        oneTimeUIOkBtn.setBackground(new Color(57,72,103));
+        oneTimeUIOkBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_oneTimeUIOkBtnMouseExited
+
+    private void oneTimeUIOkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTimeUIOkBtnActionPerformed
+        String sDate1=oneTimeDateTf.getText();  
+        Date inputDate = null;
+        Date currentDate = new Date();
+        
+        try {
+            inputDate = new SimpleDateFormat("dd-MMMM-yyyy").parse(sDate1);
+            System.out.println(sDate1+"\t"+inputDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        if(inputDate.after(currentDate)){
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Wrong Date, Try Againg!", "Date Validation", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_oneTimeUIOkBtnActionPerformed
+
+    private void oneTimeUICancelBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_oneTimeUICancelBtnMouseEntered
+        oneTimeUICancelBtn.setBackground(new Color(33, 42, 62));
+        oneTimeUICancelBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_oneTimeUICancelBtnMouseEntered
+
+    private void oneTimeUICancelBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_oneTimeUICancelBtnMouseExited
+        oneTimeUICancelBtn.setBackground(new Color(57,72,103));
+        oneTimeUICancelBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_oneTimeUICancelBtnMouseExited
+
+    private void oneTimeUICancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneTimeUICancelBtnActionPerformed
+        oneTimeUI.setVisible(false);
+        mainUI.setVisible(true);
+
+    }//GEN-LAST:event_oneTimeUICancelBtnActionPerformed
+
+    private void bookingSearchBtn3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtn3MouseEntered
+        bookingSearchBtn.setBackground(new Color(33, 42, 62));
+        bookingSearchBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_bookingSearchBtn3MouseEntered
+
+    private void bookingSearchBtn3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtn3MouseExited
+        bookingSearchBtn.setBackground(new Color(57,72,103));
+        bookingSearchBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_bookingSearchBtn3MouseExited
+
+    private void bookingSearchBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookingSearchBtn3ActionPerformed
+
+    }//GEN-LAST:event_bookingSearchBtn3ActionPerformed
+
+    private void bookingSearchBtn4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtn4MouseEntered
+        oneTimeUICancelBtn.setBackground(new Color(33, 42, 62));
+        oneTimeUICancelBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_bookingSearchBtn4MouseEntered
+
+    private void bookingSearchBtn4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingSearchBtn4MouseExited
+        oneTimeUICancelBtn.setBackground(new Color(57,72,103));
+        oneTimeUICancelBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_bookingSearchBtn4MouseExited
+
+    private void bookingSearchBtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookingSearchBtn4ActionPerformed
+        periodicUI.setVisible(false);
+        mainUI.setVisible(true);
+    }//GEN-LAST:event_bookingSearchBtn4ActionPerformed
+
+    private void okBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okBtnMouseEntered
+        okBtn.setBackground(new Color(33, 42, 62));
+        okBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_okBtnMouseEntered
+
+    private void okBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okBtnMouseExited
+        okBtn.setBackground(new Color(57,72,103));
+        okBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_okBtnMouseExited
+
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_okBtnActionPerformed
+
+    private void cancelBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelBtnMouseEntered
+        cancelBtn.setBackground(new Color(33, 42, 62));
+        cancelBtn.setForeground(new Color(247,251,255));
+    }//GEN-LAST:event_cancelBtnMouseEntered
+
+    private void cancelBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelBtnMouseExited
+        cancelBtn.setBackground(new Color(57,72,103));
+        cancelBtn.setForeground(new Color(155,164,181));
+    }//GEN-LAST:event_cancelBtnMouseExited
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        recurringUI.setVisible(false);
+        mainUI.setVisible(true);
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void closeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseEntered
+        Icon icon = new ImageIcon("src/icon/icons8_cancel_20px_6.png");
+        closeBtn.setIcon(icon);
+    }//GEN-LAST:event_closeBtnMouseEntered
+
+    private void closeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseExited
+        Icon icon = new ImageIcon("src/icon/icons8_cancel_20px_2.png");
+        closeBtn.setIcon(icon);
+    }//GEN-LAST:event_closeBtnMouseExited
+
+    private void hallTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallTableMouseClicked
+        int i = hallTable.getSelectedRow();
+
+        String hallID = hallTable.getValueAt(i, 0).toString();
+        String capacity = hallTable.getValueAt(i, 1).toString();
+        String pricing = hallTable.getValueAt(i, 2).toString();
+
+        hallNoTf.setText(hallID);
+        capacityTf.setText(capacity);
+        pricingTf.setText(pricing);
+    }//GEN-LAST:event_hallTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    private Customer customer;
-    
     public void getCustomerMenuUI(Customer customer){
         this.setVisible(true);
         this.customer = customer;
         nicLabel.setText(customer.getNic());
+        System.out.println(customer.getNic());
         fetchBookingData();
-        
-        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1163,6 +1650,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CustomerMenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1171,7 +1659,6 @@ public class CustomerMenuUI extends javax.swing.JFrame {
 //            }
 //        });
     }
-    
     
     private int x;
     private int y;
@@ -1196,22 +1683,35 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     }
     
     private void fetchHallData(){
-        try{
-            DatabaseHandler dbHandler = new DatabaseHandler();
-            PreparedStatement pstmt = dbHandler.getPreparedStatement("select * from hall");
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                int hallNumber = rs.getInt("hallNumber");
-                int capacity = rs.getInt("capacity");
-                double pricing = rs.getFloat("pricing");
-                
-                hallTable.addRow(new Object[]{hallNumber,capacity,pricing});
-            }
-            dbHandler.closeConnection();
-            System.out.println("Hall data added");
-        }catch(Exception e){
+//        TableUpdates tu = new TableUpdates();
+//        List<Hall> hallList = tu.hallList();
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        DefaultTableModel dm = (DefaultTableModel) hallTable.getModel();
+       // DFT.setRowCount(0);
+        try {
+        
+            String query = "SELECT * FROM hall";
+            PreparedStatement pst = dbHandler.getPreparedStatement(query);
+            ResultSet rs = pst.executeQuery();
+            dm.setRowCount(0);
+        
+        while (rs.next()) {
             
+            Vector v = new Vector();
+            v.add(rs.getInt("hallNumber"));
+            v.add(rs.getInt("capacity"));
+            v.add(rs.getInt("pricing"));
+            
+            dm.addRow(v);
         }
+        
+            
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+       
+        dbHandler.closeConnection();
         
         
     }
@@ -1223,6 +1723,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
         int hallNo;
         Date date;
         int paymentId;
+        DefaultTableModel dm = (DefaultTableModel) bookingTable.getModel();
         
         try{
             DatabaseHandler dbHandler = new DatabaseHandler();
@@ -1240,7 +1741,7 @@ public class CustomerMenuUI extends javax.swing.JFrame {
                 hallNo = rs.getInt("hallNumber");
                 date = rs.getDate("date");
                 paymentId = rs.getInt("paymentId");
-                bookingTable.addRow(new Object[]{bookingId,hallNo,date,paymentId});
+                dm.addRow(new Object[]{bookingId,hallNo,date,paymentId});
             }
             dbHandler.closeConnection();
             System.out.println("Booking data added");
@@ -1248,49 +1749,28 @@ public class CustomerMenuUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    private void tableSelectionListener(JTable table){
-        ListSelectionModel selectionModel = table.getSelectionModel();
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int rowIndex = table.getSelectedRow();
-
-                    for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-                        Object value = table.getValueAt(rowIndex, columnIndex);
-                        
-                        if(table.getColumnCount() == 3){
-                            if(columnIndex == 0){
-                                hallNoTf.setText(String.valueOf(value));
-                                System.out.println("column 0: "+value);
-                            }else if(columnIndex == 1){
-                                capacityTf.setText(String.valueOf(value));
-                                System.out.println("column 1: "+value);
-                            }else if(columnIndex == 2){
-                                pricingTf.setText(String.valueOf(value));
-                                System.out.println("column 2: "+value);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton bookingSearchBtn;
+    private javax.swing.JButton bookingSearchBtn3;
+    private javax.swing.JButton bookingSearchBtn4;
     private resourceallocationsoftware.ViewClasses.Table.Table bookingTable;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField capacityTf;
     private javax.swing.JLabel closeBtn;
     private javax.swing.JButton deleteBtn;
+    private textfield.TextField endDateTf;
+    private textfield.TextField endDateTf1;
     private javax.swing.JLabel goBackBtn;
     private javax.swing.JTextField hallNoTf;
     private resourceallocationsoftware.ViewClasses.Table.Table hallTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
@@ -1307,10 +1787,13 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1320,12 +1803,23 @@ public class CustomerMenuUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField loginIdTextField6;
+    private javax.swing.JPanel mainUI;
     private javax.swing.JLabel minimizeBtn;
     private javax.swing.JLabel nicLabel;
+    private javax.swing.JButton okBtn;
+    private com.raven.datechooser.DateChooser oneTimeDate;
+    private textfield.TextField oneTimeDateTf;
     private radio_button.RadioButtonCustom oneTimeRdb;
+    private javax.swing.JPanel oneTimeUI;
+    private javax.swing.JButton oneTimeUICancelBtn;
+    private javax.swing.JButton oneTimeUIOkBtn;
     private javax.swing.JPanel panelMoving;
     private radio_button.RadioButtonCustom periodicRdb;
+    private javax.swing.JPanel periodicUI;
     private javax.swing.JTextField pricingTf;
     private radio_button.RadioButtonCustom recurringRdb;
+    private javax.swing.JPanel recurringUI;
+    private textfield.TextField startingDateTf;
+    private textfield.TextField startingDateTf1;
     // End of variables declaration//GEN-END:variables
 }

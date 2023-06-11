@@ -8,13 +8,28 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
+import resourceallocationsoftware.ControllerClasses.HallManager;
 import resourceallocationsoftware.ModelClasses.Admin;
-
+import resourceallocationsoftware.ModelClasses.Hall;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Vector;
 /**
  *
  * @author shanu
@@ -30,18 +45,8 @@ public class AdminUI extends javax.swing.JFrame {
         initComponents();
         setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         initMoving(AdminUI.this);
-        
-        
-        bookingTable.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018"});
-        bookingTable.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018"});
-        
+        fetchHallData();
+        fetchBookingData();
         
     }
 
@@ -70,11 +75,11 @@ public class AdminUI extends javax.swing.JFrame {
         jPanel10 = new RoundPanel(30, 30, 30, 30);
         jPanel11 = new RoundPanel(20, 20, 20, 20);
         jLabel7 = new javax.swing.JLabel();
-        loginIdTextField4 = new javax.swing.JTextField();
+        capacityTf = new javax.swing.JTextField();
         jPanel12 = new RoundPanel(30, 30, 30, 30);
         jPanel13 = new RoundPanel(20, 20, 20, 20);
         jLabel8 = new javax.swing.JLabel();
-        loginIdTextField5 = new javax.swing.JTextField();
+        pricingTf = new javax.swing.JTextField();
         addBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
@@ -110,7 +115,7 @@ public class AdminUI extends javax.swing.JFrame {
         jPanel16 = new RoundPanel(30, 30, 30, 30);
         jPanel14 = new RoundPanel(20, 20, 20, 20);
         jLabel12 = new javax.swing.JLabel();
-        customerNicTextField = new javax.swing.JTextField();
+        customerNicTf = new javax.swing.JTextField();
         closeBtn = new RoundLabel(0, 0, 50, 0);
         goBackBtn = new RoundLabel(0, 0, 50, 0);
         minimizeBtn = new RoundLabel(0, 0, 50, 0);
@@ -281,34 +286,34 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel7.setText("Capacity");
         jLabel7.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField4.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField4.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField4.setToolTipText("");
-        loginIdTextField4.setActionCommand("<Not Set>");
-        loginIdTextField4.setBorder(null);
-        loginIdTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        capacityTf.setBackground(new java.awt.Color(247, 251, 255));
+        capacityTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        capacityTf.setForeground(new java.awt.Color(67, 67, 67));
+        capacityTf.setToolTipText("");
+        capacityTf.setActionCommand("<Not Set>");
+        capacityTf.setBorder(null);
+        capacityTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField4FocusGained(evt);
+                capacityTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField4FocusLost(evt);
+                capacityTfFocusLost(evt);
             }
         });
-        loginIdTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
+        capacityTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseClicked(evt);
+                capacityTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseEntered(evt);
+                capacityTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField4MouseExited(evt);
+                capacityTfMouseExited(evt);
             }
         });
-        loginIdTextField4.addActionListener(new java.awt.event.ActionListener() {
+        capacityTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField4ActionPerformed(evt);
+                capacityTfActionPerformed(evt);
             }
         });
 
@@ -319,7 +324,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(capacityTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -330,7 +335,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(capacityTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -357,34 +362,34 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel8.setText("Pricing");
         jLabel8.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField5.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        loginIdTextField5.setForeground(new java.awt.Color(67, 67, 67));
-        loginIdTextField5.setToolTipText("");
-        loginIdTextField5.setActionCommand("<Not Set>");
-        loginIdTextField5.setBorder(null);
-        loginIdTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+        pricingTf.setBackground(new java.awt.Color(247, 251, 255));
+        pricingTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pricingTf.setForeground(new java.awt.Color(67, 67, 67));
+        pricingTf.setToolTipText("");
+        pricingTf.setActionCommand("<Not Set>");
+        pricingTf.setBorder(null);
+        pricingTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField5FocusGained(evt);
+                pricingTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField5FocusLost(evt);
+                pricingTfFocusLost(evt);
             }
         });
-        loginIdTextField5.addMouseListener(new java.awt.event.MouseAdapter() {
+        pricingTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseClicked(evt);
+                pricingTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseEntered(evt);
+                pricingTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField5MouseExited(evt);
+                pricingTfMouseExited(evt);
             }
         });
-        loginIdTextField5.addActionListener(new java.awt.event.ActionListener() {
+        pricingTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField5ActionPerformed(evt);
+                pricingTfActionPerformed(evt);
             }
         });
 
@@ -395,7 +400,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginIdTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(pricingTf, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -406,7 +411,7 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(loginIdTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pricingTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -424,6 +429,11 @@ public class AdminUI extends javax.swing.JFrame {
                 addBtnMouseExited(evt);
             }
         });
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         updateBtn.setBackground(new java.awt.Color(57, 72, 103));
         updateBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -437,6 +447,11 @@ public class AdminUI extends javax.swing.JFrame {
                 updateBtnMouseExited(evt);
             }
         });
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setBackground(new java.awt.Color(57, 72, 103));
         deleteBtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -448,6 +463,11 @@ public class AdminUI extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 deleteBtnMouseExited(evt);
+            }
+        });
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -524,6 +544,16 @@ public class AdminUI extends javax.swing.JFrame {
         hallData.setSelectionBackground(new java.awt.Color(57, 72, 103));
         hallData.setSelectionForeground(new java.awt.Color(255, 255, 255));
         hallData.getTableHeader().setReorderingAllowed(false);
+        hallData.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                hallDataFocusLost(evt);
+            }
+        });
+        hallData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hallDataMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(hallData);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -655,7 +685,7 @@ public class AdminUI extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -790,7 +820,7 @@ public class AdminUI extends javax.swing.JFrame {
         bookingTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(bookingTable);
 
-        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 600, 370));
+        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 600, 380));
         jScrollPane1.setVerticalScrollBar(new resourceallocationsoftware.ViewClasses.Table.ScrollBar());
 
         jPanel1.setBackground(new java.awt.Color(247, 251, 255));
@@ -812,13 +842,18 @@ public class AdminUI extends javax.swing.JFrame {
                 customerSearchBtnMouseExited(evt);
             }
         });
+        customerSearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerSearchBtnActionPerformed(evt);
+            }
+        });
 
         jPanel16.setBackground(new java.awt.Color(204, 204, 204));
         jPanel16.setPreferredSize(new java.awt.Dimension(161, 58));
         jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
 
         jPanel14.setBackground(new java.awt.Color(247, 251, 255));
-        jPanel14.setPreferredSize(new java.awt.Dimension(180, 50));
+        jPanel14.setPreferredSize(new java.awt.Dimension(176, 50));
         jPanel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel14MouseEntered(evt);
@@ -833,34 +868,34 @@ public class AdminUI extends javax.swing.JFrame {
         jLabel12.setText("Customer nic");
         jLabel12.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        customerNicTextField.setBackground(new java.awt.Color(247, 251, 255));
-        customerNicTextField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        customerNicTextField.setForeground(new java.awt.Color(67, 67, 67));
-        customerNicTextField.setToolTipText("");
-        customerNicTextField.setActionCommand("<Not Set>");
-        customerNicTextField.setBorder(null);
-        customerNicTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        customerNicTf.setBackground(new java.awt.Color(247, 251, 255));
+        customerNicTf.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        customerNicTf.setForeground(new java.awt.Color(67, 67, 67));
+        customerNicTf.setToolTipText("");
+        customerNicTf.setActionCommand("<Not Set>");
+        customerNicTf.setBorder(null);
+        customerNicTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                customerNicTextFieldFocusGained(evt);
+                customerNicTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                customerNicTextFieldFocusLost(evt);
+                customerNicTfFocusLost(evt);
             }
         });
-        customerNicTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+        customerNicTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                customerNicTextFieldMouseClicked(evt);
+                customerNicTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                customerNicTextFieldMouseEntered(evt);
+                customerNicTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                customerNicTextFieldMouseExited(evt);
+                customerNicTfMouseExited(evt);
             }
         });
-        customerNicTextField.addActionListener(new java.awt.event.ActionListener() {
+        customerNicTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerNicTextFieldActionPerformed(evt);
+                customerNicTfActionPerformed(evt);
             }
         });
 
@@ -871,18 +906,17 @@ public class AdminUI extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerNicTextField)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 35, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(customerNicTf, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(customerNicTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(customerNicTf, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -892,6 +926,10 @@ public class AdminUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(customerSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -901,10 +939,6 @@ public class AdminUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                         .addGap(15, 15, 15))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(customerSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -944,13 +978,12 @@ public class AdminUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(14, 14, 14))
         );
@@ -1117,38 +1150,38 @@ public class AdminUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jPanel9MouseExited
 
-    private void loginIdTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField4FocusGained
+    private void capacityTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusGained
         jPanel10.setBackground(new Color(57, 72, 103));
         jLabel7.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField4FocusGained
+    }//GEN-LAST:event_capacityTfFocusGained
 
-    private void loginIdTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField4FocusLost
+    private void capacityTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_capacityTfFocusLost
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
         
-    }//GEN-LAST:event_loginIdTextField4FocusLost
+    }//GEN-LAST:event_capacityTfFocusLost
 
-    private void loginIdTextField4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseClicked
+    private void capacityTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField4MouseClicked
+    }//GEN-LAST:event_capacityTfMouseClicked
 
-    private void loginIdTextField4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseEntered
+    private void capacityTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseEntered
         jPanel10.setBackground(new Color(57,72,103));
         jLabel7.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField4MouseEntered
+    }//GEN-LAST:event_capacityTfMouseEntered
 
-    private void loginIdTextField4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField4MouseExited
+    private void capacityTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_capacityTfMouseExited
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
         
 
-    }//GEN-LAST:event_loginIdTextField4MouseExited
+    }//GEN-LAST:event_capacityTfMouseExited
 
-    private void loginIdTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField4ActionPerformed
+    private void capacityTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capacityTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField4ActionPerformed
+    }//GEN-LAST:event_capacityTfActionPerformed
 
     private void jPanel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseEntered
         jPanel10.setBackground(new Color(57,72,103));
@@ -1162,38 +1195,38 @@ public class AdminUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jPanel11MouseExited
 
-    private void loginIdTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField5FocusGained
+    private void pricingTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusGained
         jPanel12.setBackground(new Color(57, 72, 103));
         jLabel8.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField5FocusGained
+    }//GEN-LAST:event_pricingTfFocusGained
 
-    private void loginIdTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField5FocusLost
+    private void pricingTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pricingTfFocusLost
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
         
-    }//GEN-LAST:event_loginIdTextField5FocusLost
+    }//GEN-LAST:event_pricingTfFocusLost
 
-    private void loginIdTextField5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseClicked
+    private void pricingTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseClicked
 
-    }//GEN-LAST:event_loginIdTextField5MouseClicked
+    }//GEN-LAST:event_pricingTfMouseClicked
 
-    private void loginIdTextField5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseEntered
+    private void pricingTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseEntered
         jPanel12.setBackground(new Color(57,72,103));
         jLabel8.setForeground(new Color(57,72,103));
         
-    }//GEN-LAST:event_loginIdTextField5MouseEntered
+    }//GEN-LAST:event_pricingTfMouseEntered
 
-    private void loginIdTextField5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField5MouseExited
+    private void pricingTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pricingTfMouseExited
         jPanel12.setBackground(new Color(204,204,204));
         jLabel8.setForeground(new Color(155,164,181));
         
 
-    }//GEN-LAST:event_loginIdTextField5MouseExited
+    }//GEN-LAST:event_pricingTfMouseExited
 
-    private void loginIdTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField5ActionPerformed
+    private void pricingTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pricingTfActionPerformed
 
-    }//GEN-LAST:event_loginIdTextField5ActionPerformed
+    }//GEN-LAST:event_pricingTfActionPerformed
 
     private void jPanel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseEntered
         jPanel12.setBackground(new Color(57,72,103));
@@ -1262,31 +1295,31 @@ public class AdminUI extends javax.swing.JFrame {
         customerSearchBtn.setForeground(new Color(155,164,181));
     }//GEN-LAST:event_customerSearchBtnMouseExited
 
-    private void customerNicTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_customerNicTextFieldFocusGained
+    private void customerNicTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_customerNicTfFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerNicTextFieldFocusGained
+    }//GEN-LAST:event_customerNicTfFocusGained
 
-    private void customerNicTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_customerNicTextFieldFocusLost
+    private void customerNicTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_customerNicTfFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerNicTextFieldFocusLost
+    }//GEN-LAST:event_customerNicTfFocusLost
 
-    private void customerNicTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTextFieldMouseClicked
+    private void customerNicTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTfMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerNicTextFieldMouseClicked
+    }//GEN-LAST:event_customerNicTfMouseClicked
 
-    private void customerNicTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTextFieldMouseEntered
+    private void customerNicTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTfMouseEntered
         jPanel16.setBackground(new Color(57,72,103));
         jLabel12.setForeground(new Color(57,72,103));
-    }//GEN-LAST:event_customerNicTextFieldMouseEntered
+    }//GEN-LAST:event_customerNicTfMouseEntered
 
-    private void customerNicTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTextFieldMouseExited
+    private void customerNicTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerNicTfMouseExited
         jPanel16.setBackground(new Color(204,204,204));
         jLabel12.setForeground(new Color(155,164,181));
-    }//GEN-LAST:event_customerNicTextFieldMouseExited
+    }//GEN-LAST:event_customerNicTfMouseExited
 
-    private void customerNicTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNicTextFieldActionPerformed
+    private void customerNicTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNicTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerNicTextFieldActionPerformed
+    }//GEN-LAST:event_customerNicTfActionPerformed
 
     private void jPanel14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel14MouseEntered
         jPanel16.setBackground(new Color(57,72,103));
@@ -1352,6 +1385,91 @@ public class AdminUI extends javax.swing.JFrame {
         bookingSearchBtn.setBackground(new Color(57,72,103));
         bookingSearchBtn.setForeground(new Color(155,164,181));
     }//GEN-LAST:event_bookingSearchBtnMouseExited
+
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        int hallNo = Integer.parseInt(hallNoTf.getText());
+        int capacity = Integer.parseInt(capacityTf.getText());
+        double pricing = Double.parseDouble(pricingTf.getText());
+        
+        new HallManager().addHall(hallNo, capacity, pricing);
+        
+        fetchHallData();
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        int hallNo = Integer.parseInt(hallNoTf.getText());
+        int capacity = Integer.parseInt(capacityTf.getText());
+        double pricing = Double.parseDouble(pricingTf.getText());
+        
+        new HallManager().updateHall(hallNo, capacity, capacity);
+        
+        fetchHallData();
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int hallNo = Integer.parseInt(hallNoTf.getText());
+        
+        new HallManager().deleteHall(hallNo);
+        fetchHallData();
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void customerSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerSearchBtnActionPerformed
+        String nic = null;
+        String name = null;
+        String telephone = null;
+        int customerId = Integer.parseInt(customerNicTf.getText());
+        ResultSet rs;
+        int userId = 0;
+        
+        try{
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            PreparedStatement pstmt = dbHandler.getPreparedStatement("select userId from customer where customerId = ?");
+            pstmt.setInt(1, customerId);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                userId = rs.getInt("userId");
+            }
+            pstmt = dbHandler.getPreparedStatement("select userNic,name from user where userId = ?");
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                nic = rs.getString("userNic");
+                name = rs.getString("name");
+            }
+            System.out.println(userId);
+            pstmt = dbHandler.getPreparedStatement("select telephoneNumber,customerId from customer where userId = ?");
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                telephone = rs.getString("telephoneNumber");
+                customerId = rs.getInt("customerId");
+            }
+            System.out.println(nic+"--"+name+"--"+telephone+"--"+customerId);
+            dbHandler.closeConnection();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        new CustomerDetailsUI().showCustomerDetailsUI(name, nic, telephone);
+        customerNicTf.setText("");
+    }//GEN-LAST:event_customerSearchBtnActionPerformed
+
+    private void hallDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hallDataMouseClicked
+        int i = hallData.getSelectedRow();
+
+        String hallID = hallData.getValueAt(i, 0).toString();
+        String capacity = hallData.getValueAt(i, 1).toString();
+        String pricing = hallData.getValueAt(i, 2).toString();
+
+        hallNoTf.setText(hallID);
+        capacityTf.setText(capacity);
+        pricingTf.setText(pricing);
+    }//GEN-LAST:event_hallDataMouseClicked
+
+    private void hallDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_hallDataFocusLost
+
+    }//GEN-LAST:event_hallDataFocusLost
     
     /**
      * @param args the command line arguments
@@ -1391,6 +1509,65 @@ public class AdminUI extends javax.swing.JFrame {
 //            }
 //        });
     }
+
+    
+    private void fetchHallData(){
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        DefaultTableModel dm = (DefaultTableModel) hallData.getModel();
+        try {
+        
+            String query = "SELECT * FROM hall";
+            PreparedStatement pst = dbHandler.getPreparedStatement(query);
+            ResultSet rs = pst.executeQuery();
+            dm.setRowCount(0);
+        
+        while (rs.next()) {
+            
+            Vector v = new Vector();
+            v.add(rs.getInt("hallNumber"));
+            v.add(rs.getInt("capacity"));
+            v.add(rs.getInt("pricing"));
+            
+            dm.addRow(v);
+        }
+        
+            
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+       
+        dbHandler.closeConnection();
+        
+        
+    }
+    
+    private void fetchBookingData(){
+        
+        int bookingId;
+        int customerId;
+        int hallNo;
+        Date date;
+        int paymentId;
+        DefaultTableModel dm = (DefaultTableModel) bookingTable.getModel();
+        try{
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            PreparedStatement pstmt = dbHandler.getPreparedStatement("select * from booking");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                bookingId = rs.getInt("bookingId");
+                customerId = rs.getInt("customerId");
+                hallNo = rs.getInt("hallNumber");
+                date = rs.getDate("date");
+                paymentId = rs.getInt("paymentId");
+                dm.addRow(new Object[]{bookingId,customerId,hallNo,date,paymentId});
+            }
+            dbHandler.closeConnection();
+            System.out.println("Booking data added");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     private int x;
     private int y;
@@ -1419,10 +1596,11 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JButton bookingSearchBtn;
     private resourceallocationsoftware.ViewClasses.Table.Table bookingTable;
+    private javax.swing.JTextField capacityTf;
     private javax.swing.JLabel closeBtn;
     private javax.swing.JRadioButton customerNicRdBtn;
-    private javax.swing.JTextField customerNicTextField;
     private javax.swing.JTextField customerNicTextField2;
+    private javax.swing.JTextField customerNicTf;
     private javax.swing.JButton customerSearchBtn;
     private javax.swing.JRadioButton dateRdBtn;
     private javax.swing.JButton deleteBtn;
@@ -1470,11 +1648,10 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField loginIdTextField4;
-    private javax.swing.JTextField loginIdTextField5;
     private javax.swing.JLabel minimizeBtn;
     private javax.swing.JLabel nicLabel;
     private javax.swing.JPanel panelMoving;
+    private javax.swing.JTextField pricingTf;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,13 @@
  */
 package resourceallocationsoftware.ModelClasses;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,24 +26,36 @@ public class PeriodicBooking extends Booking{
         return startingDate;
     }
 
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
+    public void setStartingDate(Date startingDate) {
+        Instant instant = startingDate.toInstant();
+        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+        this.startingDate = zdt.toLocalDate();
     }
 
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) {
+        Instant instant = endDate.toInstant();
+        ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+        this.endDate = zdt.toLocalDate();
     }
     
-    public PeriodicBooking(String bookingId, Hall hall, Payment payment, Customer customer) {
-        super(bookingId, hall, payment, customer);
-    }
-
-    public static void calcDate(){
+    public PeriodicBooking() {
+        super();
         
     }
+    
+    public List<LocalDate> getPeriodDateList(){
+        List<LocalDate> dateList = new ArrayList();
+        for (LocalDate d = startingDate; !d.isAfter(endDate); d = d.plusDays(1)) {
+            dateList.add(d);
+        }
+        System.out.println("Period dates fetched..");
+        return dateList;
+    }
+
+    
     
 }

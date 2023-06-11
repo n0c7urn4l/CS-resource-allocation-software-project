@@ -56,6 +56,10 @@ public abstract class Booking {
         this.customer = customer;
     }
     
+    public Booking(){
+        this("",null,null,null);
+    }
+    
     public static void checkHallAvailability(LocalDate date){
         
     }

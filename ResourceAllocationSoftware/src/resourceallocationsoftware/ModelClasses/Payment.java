@@ -4,6 +4,7 @@
  */
 package resourceallocationsoftware.ModelClasses;
 import java.time.LocalDate;
+import java.sql.Date;
 /**
  *
  * @author shanu
@@ -12,10 +13,10 @@ public class Payment {
     
     private String paymentId;
     private double initialPayment;
-    private LocalDate initialPaymentDate;
+    private Date initialPaymentDate;
     private boolean initialPaymentStatus;
     private double finalPayment;
-    private LocalDate finalPaymentDate;
+    private Date finalPaymentDate;
     private boolean finalPaymentStatus;
 
     public String getPaymentId() {
@@ -34,11 +35,11 @@ public class Payment {
         this.initialPayment = initialPayment;
     }
 
-    public LocalDate getInitialPaymentDate() {
+    public Date getInitialPaymentDate() {
         return initialPaymentDate;
     }
 
-    public void setInitialPaymentDate(LocalDate initialPaymentDate) {
+    public void setInitialPaymentDate(Date initialPaymentDate) {
         this.initialPaymentDate = initialPaymentDate;
     }
 
@@ -58,11 +59,11 @@ public class Payment {
         this.finalPayment = finalPayment;
     }
 
-    public LocalDate getFinalPaymentDate() {
+    public Date getFinalPaymentDate() {
         return finalPaymentDate;
     }
 
-    public void setFinalPaymentDate(LocalDate finalPaymentDate) {
+    public void setFinalPaymentDate(Date finalPaymentDate) {
         this.finalPaymentDate = finalPaymentDate;
     }
 
@@ -74,8 +75,8 @@ public class Payment {
         this.finalPaymentStatus = finalPaymentStatus;
     }
 
-    public Payment(String paymentId, double initialPayment, LocalDate initialPaymentDate, boolean initialPaymentStatus) {
-        this.paymentId = paymentId;
+    public Payment(double initialPayment, Date initialPaymentDate, boolean initialPaymentStatus) {
+        
         this.initialPayment = initialPayment;
         this.initialPaymentDate = initialPaymentDate;
         this.initialPaymentStatus = initialPaymentStatus;

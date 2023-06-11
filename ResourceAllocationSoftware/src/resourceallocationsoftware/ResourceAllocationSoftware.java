@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
 import java.sql.*;
+import resourceallocationsoftware.ControllerClasses.BookingManager;
 import resourceallocationsoftware.ModelClasses.Login;
 import resourceallocationsoftware.ViewClasses.*;
 
@@ -25,7 +26,7 @@ public class ResourceAllocationSoftware {
     public static void main(String[] args) {
         
         new LoginUI().getLoginUI();
-       
+//        new BookingManager().addBooking();
         
     }
     
