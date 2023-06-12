@@ -7,7 +7,9 @@ package resourceallocationsoftware.ViewClasses;
 import java.awt.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
+import resourceallocationsoftware.ControllerClasses.DatabaseHandler;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,22 +41,22 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jPanel8 = new RoundPanel(30, 30, 30, 30);
         jPanel9 = new RoundPanel(20, 20, 20, 20);
         jLabel6 = new javax.swing.JLabel();
-        loginIdTextField3 = new javax.swing.JTextField();
+        nameTf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel10 = new RoundPanel(30, 30, 30, 30);
         jPanel11 = new RoundPanel(20, 20, 20, 20);
         jLabel7 = new javax.swing.JLabel();
-        userNameTextField = new javax.swing.JTextField();
+        nicTf = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel14 = new RoundPanel(30, 30, 30, 30);
         jPanel15 = new RoundPanel(20, 20, 20, 20);
         jLabel9 = new javax.swing.JLabel();
-        contactNoTextField = new javax.swing.JTextField();
+        contactNoTf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel16 = new RoundPanel(30, 30, 30, 30);
         jPanel17 = new RoundPanel(20, 20, 20, 20);
         jLabel10 = new javax.swing.JLabel();
-        passwordTextField = new javax.swing.JTextField();
+        passwordTf = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         closeBtn = new RoundLabel(0, 0, 50, 0);
 
@@ -79,6 +81,11 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 createBtnMouseExited(evt);
+            }
+        });
+        createBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createBtnActionPerformed(evt);
             }
         });
 
@@ -108,34 +115,34 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel6.setText("Name");
         jLabel6.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        loginIdTextField3.setBackground(new java.awt.Color(247, 251, 255));
-        loginIdTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        loginIdTextField3.setForeground(new java.awt.Color(57, 72, 103));
-        loginIdTextField3.setToolTipText("");
-        loginIdTextField3.setActionCommand("<Not Set>");
-        loginIdTextField3.setBorder(null);
-        loginIdTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        nameTf.setBackground(new java.awt.Color(247, 251, 255));
+        nameTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nameTf.setForeground(new java.awt.Color(57, 72, 103));
+        nameTf.setToolTipText("");
+        nameTf.setActionCommand("<Not Set>");
+        nameTf.setBorder(null);
+        nameTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusGained(evt);
+                nameTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                loginIdTextField3FocusLost(evt);
+                nameTfFocusLost(evt);
             }
         });
-        loginIdTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+        nameTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseClicked(evt);
+                nameTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseEntered(evt);
+                nameTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginIdTextField3MouseExited(evt);
+                nameTfMouseExited(evt);
             }
         });
-        loginIdTextField3.addActionListener(new java.awt.event.ActionListener() {
+        nameTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginIdTextField3ActionPerformed(evt);
+                nameTfActionPerformed(evt);
             }
         });
 
@@ -152,7 +159,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -162,7 +169,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(loginIdTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -190,34 +197,34 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel7.setText("Nic");
         jLabel7.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        userNameTextField.setBackground(new java.awt.Color(247, 251, 255));
-        userNameTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        userNameTextField.setForeground(new java.awt.Color(57, 72, 103));
-        userNameTextField.setToolTipText("");
-        userNameTextField.setActionCommand("<Not Set>");
-        userNameTextField.setBorder(null);
-        userNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        nicTf.setBackground(new java.awt.Color(247, 251, 255));
+        nicTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nicTf.setForeground(new java.awt.Color(57, 72, 103));
+        nicTf.setToolTipText("");
+        nicTf.setActionCommand("<Not Set>");
+        nicTf.setBorder(null);
+        nicTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                userNameTextFieldFocusGained(evt);
+                nicTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                userNameTextFieldFocusLost(evt);
+                nicTfFocusLost(evt);
             }
         });
-        userNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+        nicTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                userNameTextFieldMouseClicked(evt);
+                nicTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                userNameTextFieldMouseEntered(evt);
+                nicTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                userNameTextFieldMouseExited(evt);
+                nicTfMouseExited(evt);
             }
         });
-        userNameTextField.addActionListener(new java.awt.event.ActionListener() {
+        nicTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameTextFieldActionPerformed(evt);
+                nicTfActionPerformed(evt);
             }
         });
 
@@ -234,7 +241,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nicTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -244,7 +251,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nicTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -272,34 +279,34 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel9.setText("Contact no");
         jLabel9.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        contactNoTextField.setBackground(new java.awt.Color(247, 251, 255));
-        contactNoTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        contactNoTextField.setForeground(new java.awt.Color(57, 72, 103));
-        contactNoTextField.setToolTipText("");
-        contactNoTextField.setActionCommand("<Not Set>");
-        contactNoTextField.setBorder(null);
-        contactNoTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        contactNoTf.setBackground(new java.awt.Color(247, 251, 255));
+        contactNoTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        contactNoTf.setForeground(new java.awt.Color(57, 72, 103));
+        contactNoTf.setToolTipText("");
+        contactNoTf.setActionCommand("<Not Set>");
+        contactNoTf.setBorder(null);
+        contactNoTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                contactNoTextFieldFocusGained(evt);
+                contactNoTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                contactNoTextFieldFocusLost(evt);
+                contactNoTfFocusLost(evt);
             }
         });
-        contactNoTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+        contactNoTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                contactNoTextFieldMouseClicked(evt);
+                contactNoTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                contactNoTextFieldMouseEntered(evt);
+                contactNoTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                contactNoTextFieldMouseExited(evt);
+                contactNoTfMouseExited(evt);
             }
         });
-        contactNoTextField.addActionListener(new java.awt.event.ActionListener() {
+        contactNoTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contactNoTextFieldActionPerformed(evt);
+                contactNoTfActionPerformed(evt);
             }
         });
 
@@ -316,7 +323,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(contactNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contactNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
@@ -327,7 +334,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(contactNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(contactNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -355,34 +362,34 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel10.setText("Password");
         jLabel10.setPreferredSize(new java.awt.Dimension(70, 18));
 
-        passwordTextField.setBackground(new java.awt.Color(247, 251, 255));
-        passwordTextField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        passwordTextField.setForeground(new java.awt.Color(57, 72, 103));
-        passwordTextField.setToolTipText("");
-        passwordTextField.setActionCommand("<Not Set>");
-        passwordTextField.setBorder(null);
-        passwordTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        passwordTf.setBackground(new java.awt.Color(247, 251, 255));
+        passwordTf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        passwordTf.setForeground(new java.awt.Color(57, 72, 103));
+        passwordTf.setToolTipText("");
+        passwordTf.setActionCommand("<Not Set>");
+        passwordTf.setBorder(null);
+        passwordTf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                passwordTextFieldFocusGained(evt);
+                passwordTfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                passwordTextFieldFocusLost(evt);
+                passwordTfFocusLost(evt);
             }
         });
-        passwordTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+        passwordTf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                passwordTextFieldMouseClicked(evt);
+                passwordTfMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                passwordTextFieldMouseEntered(evt);
+                passwordTfMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                passwordTextFieldMouseExited(evt);
+                passwordTfMouseExited(evt);
             }
         });
-        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
+        passwordTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextFieldActionPerformed(evt);
+                passwordTfActionPerformed(evt);
             }
         });
 
@@ -399,7 +406,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordTf, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
@@ -409,7 +416,7 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
                     .addGroup(jPanel17Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(passwordTf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -515,13 +522,13 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_closeBtnMousePressed
 
-    private void loginIdTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIdTextField3ActionPerformed
+    private void nameTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTfActionPerformed
        
-    }//GEN-LAST:event_loginIdTextField3ActionPerformed
+    }//GEN-LAST:event_nameTfActionPerformed
 
-    private void loginIdTextField3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseClicked
+    private void nameTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameTfMouseClicked
         
-    }//GEN-LAST:event_loginIdTextField3MouseClicked
+    }//GEN-LAST:event_nameTfMouseClicked
 
     private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
         jPanel8.setBackground(new Color(57,72,103));
@@ -537,64 +544,64 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel2.setIcon(icon);
     }//GEN-LAST:event_jPanel9MouseExited
 
-    private void loginIdTextField3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseEntered
+    private void nameTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameTfMouseEntered
         jPanel8.setBackground(new Color(57,72,103));
         jLabel6.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px_1.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3MouseEntered
+    }//GEN-LAST:event_nameTfMouseEntered
 
-    private void loginIdTextField3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginIdTextField3MouseExited
+    private void nameTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameTfMouseExited
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px.png");
         jLabel2.setIcon(icon);
         
-    }//GEN-LAST:event_loginIdTextField3MouseExited
+    }//GEN-LAST:event_nameTfMouseExited
 
-    private void loginIdTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusGained
+    private void nameTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTfFocusGained
         jPanel8.setBackground(new Color(57, 72, 103));
         jLabel6.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px_1.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3FocusGained
+    }//GEN-LAST:event_nameTfFocusGained
 
-    private void loginIdTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginIdTextField3FocusLost
+    private void nameTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameTfFocusLost
         jPanel8.setBackground(new Color(204,204,204));
         jLabel6.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_user_30px.png");
         jLabel2.setIcon(icon);
-    }//GEN-LAST:event_loginIdTextField3FocusLost
+    }//GEN-LAST:event_nameTfFocusLost
 
-    private void userNameTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameTextFieldFocusGained
+    private void nicTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicTfFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameTextFieldFocusGained
+    }//GEN-LAST:event_nicTfFocusGained
 
-    private void userNameTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameTextFieldFocusLost
+    private void nicTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nicTfFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameTextFieldFocusLost
+    }//GEN-LAST:event_nicTfFocusLost
 
-    private void userNameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTextFieldMouseClicked
+    private void nicTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nicTfMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameTextFieldMouseClicked
+    }//GEN-LAST:event_nicTfMouseClicked
 
-    private void userNameTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTextFieldMouseEntered
+    private void nicTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nicTfMouseEntered
         jPanel10.setBackground(new Color(57,72,103));
         jLabel7.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_password_key_25px.png");
         jLabel3.setIcon(icon);
-    }//GEN-LAST:event_userNameTextFieldMouseEntered
+    }//GEN-LAST:event_nicTfMouseEntered
 
-    private void userNameTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameTextFieldMouseExited
+    private void nicTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nicTfMouseExited
         jPanel10.setBackground(new Color(204,204,204));
         jLabel7.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_password_key_25px_1.png");
         jLabel3.setIcon(icon);
-    }//GEN-LAST:event_userNameTextFieldMouseExited
+    }//GEN-LAST:event_nicTfMouseExited
 
-    private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed
+    private void nicTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nicTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameTextFieldActionPerformed
+    }//GEN-LAST:event_nicTfActionPerformed
 
     private void jPanel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseEntered
         jPanel10.setBackground(new Color(57,72,103));
@@ -610,35 +617,35 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel3.setIcon(icon);
     }//GEN-LAST:event_jPanel11MouseExited
 
-    private void contactNoTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactNoTextFieldFocusGained
+    private void contactNoTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactNoTfFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_contactNoTextFieldFocusGained
+    }//GEN-LAST:event_contactNoTfFocusGained
 
-    private void contactNoTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactNoTextFieldFocusLost
+    private void contactNoTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactNoTfFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_contactNoTextFieldFocusLost
+    }//GEN-LAST:event_contactNoTfFocusLost
 
-    private void contactNoTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTextFieldMouseClicked
+    private void contactNoTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTfMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_contactNoTextFieldMouseClicked
+    }//GEN-LAST:event_contactNoTfMouseClicked
 
-    private void contactNoTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTextFieldMouseEntered
+    private void contactNoTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTfMouseEntered
         jPanel14.setBackground(new Color(57,72,103));
         jLabel9.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_phone_25px_1.png");
         jLabel5.setIcon(icon);
-    }//GEN-LAST:event_contactNoTextFieldMouseEntered
+    }//GEN-LAST:event_contactNoTfMouseEntered
 
-    private void contactNoTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTextFieldMouseExited
+    private void contactNoTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactNoTfMouseExited
         jPanel14.setBackground(new Color(204,204,204));
         jLabel9.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_phone_25px.png");
         jLabel5.setIcon(icon);
-    }//GEN-LAST:event_contactNoTextFieldMouseExited
+    }//GEN-LAST:event_contactNoTfMouseExited
 
-    private void contactNoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNoTextFieldActionPerformed
+    private void contactNoTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNoTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_contactNoTextFieldActionPerformed
+    }//GEN-LAST:event_contactNoTfActionPerformed
 
     private void jPanel15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel15MouseEntered
         jPanel14.setBackground(new Color(57,72,103));
@@ -654,35 +661,35 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         jLabel5.setIcon(icon);
     }//GEN-LAST:event_jPanel15MouseExited
 
-    private void passwordTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFieldFocusGained
+    private void passwordTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTfFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldFocusGained
+    }//GEN-LAST:event_passwordTfFocusGained
 
-    private void passwordTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTextFieldFocusLost
+    private void passwordTfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTfFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldFocusLost
+    }//GEN-LAST:event_passwordTfFocusLost
 
-    private void passwordTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTextFieldMouseClicked
+    private void passwordTfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTfMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldMouseClicked
+    }//GEN-LAST:event_passwordTfMouseClicked
 
-    private void passwordTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTextFieldMouseEntered
+    private void passwordTfMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTfMouseEntered
         jPanel16.setBackground(new Color(57,72,103));
         jLabel10.setForeground(new Color(57,72,103));
         Icon icon = new ImageIcon("src/icon/icons8_lock_30px_1.png");
         jLabel11.setIcon(icon);
-    }//GEN-LAST:event_passwordTextFieldMouseEntered
+    }//GEN-LAST:event_passwordTfMouseEntered
 
-    private void passwordTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTextFieldMouseExited
+    private void passwordTfMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordTfMouseExited
         jPanel16.setBackground(new Color(204,204,204));
         jLabel10.setForeground(new Color(155,164,181));
         Icon icon = new ImageIcon("src/icon/icons8_lock_30px_2.png");
         jLabel11.setIcon(icon);
-    }//GEN-LAST:event_passwordTextFieldMouseExited
+    }//GEN-LAST:event_passwordTfMouseExited
 
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
+    private void passwordTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
+    }//GEN-LAST:event_passwordTfActionPerformed
 
     private void jPanel17MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel17MouseEntered
         jPanel16.setBackground(new Color(57,72,103));
@@ -713,10 +720,66 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         createBtn.setForeground(new Color(155,164,181));
     }//GEN-LAST:event_createBtnMouseExited
 
+    private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
+        String name = null;
+        String nic = null;
+        String contactNo = null;
+        String password = null;
+        boolean textFieldFill = true;
+        int userId = 0;
+        
+        name = nameTf.getText();
+        nic = nicTf.getText();
+        contactNo = contactNoTf.getText();
+        password = passwordTf.getText();
+        
+        if(name.equals(null)||nic.equals(null)||contactNo.equals(null)||password.equals(null)){
+            textFieldFill = false;
+        }
+        
+        if(textFieldFill){
+            try{
+                
+                DatabaseHandler dbHandler = new DatabaseHandler();
+                PreparedStatement pstmt = dbHandler.getPreparedStatement("insert into user (userNic,name) values (?,?);");
+                pstmt.setString(1, nic);
+                pstmt.setString(2, name);
+                pstmt.execute();
+                pstmt = dbHandler.getPreparedStatement("select userId from user order by userId desc limit 0,1");
+                ResultSet rs = pstmt.executeQuery();
+                if(rs.next()){
+                    userId = rs.getInt("userId");
+                }
+                pstmt = dbHandler.getPreparedStatement("insert into login(userId,userName,password,authorityLevel) values(?,?,?,?)");
+                pstmt.setInt(1, userId);
+                pstmt.setString(2, nic);
+                pstmt.setString(3, password);
+                pstmt.setInt(4,2);
+                pstmt.execute();
+                pstmt = dbHandler.getPreparedStatement("insert into customer(userId,telephoneNumber) values(?,?)");
+                pstmt.setInt(1, userId);
+                pstmt.setString(2, contactNo);
+                pstmt.execute();
+                dbHandler.closeConnection();
+                JOptionPane.showMessageDialog(null, "Registration Complete..", "Registration Status",JOptionPane.INFORMATION_MESSAGE);
+                new LoginUI().setVisible(true);
+                this.dispose();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Registration Failed, Check Input Data..", "Registration Status",JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        
+        
+    }//GEN-LAST:event_createBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void showRegistrationUI() {
+        this.setVisible(true);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -742,16 +805,16 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CustomerRegistrationUI().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new CustomerRegistrationUI().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel closeBtn;
-    private javax.swing.JTextField contactNoTextField;
+    private javax.swing.JTextField contactNoTf;
     private javax.swing.JButton createBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -772,8 +835,8 @@ public class CustomerRegistrationUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField loginIdTextField3;
-    private javax.swing.JTextField passwordTextField;
-    private javax.swing.JTextField userNameTextField;
+    private javax.swing.JTextField nameTf;
+    private javax.swing.JTextField nicTf;
+    private javax.swing.JTextField passwordTf;
     // End of variables declaration//GEN-END:variables
 }

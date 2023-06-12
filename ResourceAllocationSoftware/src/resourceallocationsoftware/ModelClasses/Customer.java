@@ -11,6 +11,15 @@ package resourceallocationsoftware.ModelClasses;
 public class Customer extends User{
     
     protected String telephone;
+    private int customerId;
+    
+    public void setCustomerId(int customerId){
+        this.customerId = customerId;
+    }
+    
+    public int getCustomerId(){
+        return customerId;
+    }
     
     public String getTelephone() {
         return telephone;

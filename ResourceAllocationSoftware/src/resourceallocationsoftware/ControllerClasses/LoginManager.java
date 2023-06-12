@@ -81,7 +81,6 @@ public class LoginManager {
         boolean userVerify = false;
         try{
             dbHandler = new DatabaseHandler();
-//            rs = dbHandler.getResult("SELECT userName,password,authorityLevel FROM login WHERE userName= '"+userName+"';");
             PreparedStatement pstmt = dbHandler.getPreparedStatement("select userName,password,authorityLevel FROM login WHERE userName= ?;");
             pstmt.setString(1, userName);
             rs = pstmt.executeQuery();
@@ -157,6 +156,7 @@ public class LoginManager {
         String name = null;
         Login login;
         String telephone = null;
+        int customerId = 0;
         
         ResultSet rs;
         int userId = 0;
@@ -177,13 +177,14 @@ public class LoginManager {
                 name = rs.getString("name");
             }
             System.out.println(userId);
-            pstmt = dbHandler.getPreparedStatement("select telephoneNumber from customer where userId = ?");
+            pstmt = dbHandler.getPreparedStatement("select telephoneNumber,customerId from customer where userId = ?");
             pstmt.setInt(1, userId);
             rs = pstmt.executeQuery();
             if(rs.next()){
                 telephone = rs.getString("telephoneNumber");
+                customerId = rs.getInt("customerId");
             }
-            System.out.println(nic+"--"+name+"--"+telephone);
+            System.out.println(nic+"--"+name+"--"+telephone+"--"+customerId);
             dbHandler.closeConnection();
         }catch(Exception e){
             e.printStackTrace();
@@ -191,6 +192,7 @@ public class LoginManager {
         Login l = new Login(authorityLevel, userName, password);
         Customer customer = new Customer(nic, name, l, telephone);
         customer.setUserId(userId);
+        customer.setCustomerId(customerId);
         
         return customer;
     }

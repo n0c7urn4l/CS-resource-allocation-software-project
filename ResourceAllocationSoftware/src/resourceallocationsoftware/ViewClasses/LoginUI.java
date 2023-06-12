@@ -496,7 +496,7 @@ public class LoginUI extends javax.swing.JFrame {
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
         this.dispose();
-        new CustomerRegistrationUI().setVisible(true);
+        new CustomerRegistrationUI().showRegistrationUI();
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void loginBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnMouseExited
