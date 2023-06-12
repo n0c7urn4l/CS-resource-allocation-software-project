@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import resourceallocationsoftware.ModelClasses.BooleanGrabber;
 import resourceallocationsoftware.ViewClasses.CustomerDetailsUI;
-import resourceallocationsoftware.ViewClasses.UnavailableDateUI;
 
 
 /**
@@ -23,16 +22,23 @@ import resourceallocationsoftware.ViewClasses.UnavailableDateUI;
  * @author shanu
  */
 public class BookingManager {
-    private List<Date> dList =  new ArrayList();
+    public List<Date> dList =  new ArrayList();
     private List<LocalDate> localDateList = new ArrayList();
-    private List<Date> unavailableDateList = new ArrayList();
-    private int customerId;
-    private int hallNo;
-    private double hallPricing;
+    public List<Date> unavailableDateList = new ArrayList();
+    public int customerId;
+    public int hallNo;
+    public double hallPricing;
     private int paymentId;
     public BooleanGrabber bg;
-    public BookingManager(){
-        this.bg = new BooleanGrabber();
+
+    public BookingManager(){}
+
+    public List<LocalDate> getLocalDateList() {
+        return localDateList;
+    }
+
+    public void setLocalDateList(List<LocalDate> localDateList) {
+        this.localDateList = localDateList;
     }
     
     private void localDateToDate(){
@@ -43,7 +49,7 @@ public class BookingManager {
         System.out.println("localdates added to dList");
     }
     
-    public void dateVerifier(){
+    public boolean dateVerifier(){
         localDateToDate();
         List<Date> dArr = new ArrayList();
         List<Date> unDate = new ArrayList();
@@ -65,48 +71,46 @@ public class BookingManager {
             for(Date d2 : dList){
                 if(d1.equals(d2)){
                     flag = true;
-                    unDate.add(d2);
+                    unavailableDateList.add(d2);
                 }
             }
         }
         
         if(flag){
-            BooleanGrabber bg = new BooleanGrabber();
-            new UnavailableDateUI(unDate).showUnavailableDatesUI(bg);;
-            boolean flag2 = bg.isFlag1();
-            
-            if(flag2){
-                for(Date d2:unDate){
-                    dList.remove(d2);
-                }
-                addBooking();
-            }else{
-                JOptionPane.showMessageDialog(null, "Booking Cancelled..", "Booking Status",JOptionPane.INFORMATION_MESSAGE);
-            }
+            return flag;
         }else{
             addBooking();
+            JOptionPane.showMessageDialog(null, "Booking added..", "Booking Status",JOptionPane.INFORMATION_MESSAGE);
+            
         }
-        
+        return flag;
     }
     
     public void addBooking(){
 //        localDateToDate();
         int dateCount = dList.size();
-        
-//        new CustomerDetailsUI(hallNo, dateCount, hallPricing*dateCount,dList.get(0)).showPeriodicUI(bg);
-        
-        if(bg.isFlag1()){
+        double totalCost = dateCount*hallPricing;
+        Date currentDate = Date.valueOf(LocalDate.now());
+        String payInfo = "Pay "+totalCost+" to the reception";
+        JOptionPane.showMessageDialog(null, payInfo, "Booking Status",JOptionPane.INFORMATION_MESSAGE);
+
+        if(true){
             try{
                 DatabaseHandler dbHandler = new DatabaseHandler();
-                PreparedStatement pstmt = dbHandler.getPreparedStatement("select paymentId from payment order by paymentId desc limit 0,1");
+                PreparedStatement pstmt = dbHandler.getPreparedStatement("insert into payment(initialPayment,initialPaymentDate,initialPaymentStatus) values(?,?,?)");
+                pstmt.setDouble(1, totalCost);
+                pstmt.setDate(2,currentDate);
+                pstmt.setBoolean(3, true);
+                pstmt.execute();
+                pstmt = dbHandler.getPreparedStatement("select paymentId from payment order by paymentId desc limit 0,1");
                 ResultSet rs = pstmt.executeQuery();
                 if(rs.next()){
                     paymentId = rs.getInt("paymentId");
                 }
                 for(Date d:dList){
-                    pstmt = dbHandler.getPreparedStatement("insert into booking(customerId,date,hallNumber,paymentId) values('?','?','?','?')");
+                    pstmt = dbHandler.getPreparedStatement("insert into booking(customerId,date,hallNumber,paymentId) values(?,?,?,?)");
                     pstmt.setInt(1, customerId);
-                    pstmt.setDate(hallNo, d);
+                    pstmt.setDate(2, d);
                     pstmt.setInt(3, hallNo);
                     pstmt.setInt(4, paymentId);
                     pstmt.execute();
@@ -116,9 +120,9 @@ public class BookingManager {
                 e.printStackTrace();
             }
             System.out.println("Booking succesfull..");
+
         }else{
             JOptionPane.showMessageDialog(null, "Booking Cancelled..", "Booking Status",JOptionPane.INFORMATION_MESSAGE);
-            
         }
     }
     

@@ -35,7 +35,7 @@ public class OneTimeBooking extends Booking{
         
     }
     
-    public List<LocalDate> getOneTimeDate(BooleanGrabber bg){
+    public List<LocalDate> getOneTimeDate(){
         List<LocalDate> dateList = new ArrayList();
         dateList.add(date);
         System.out.println("One time dates fetched");

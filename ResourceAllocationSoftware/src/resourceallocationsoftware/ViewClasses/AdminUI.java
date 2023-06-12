@@ -1401,7 +1401,7 @@ public class AdminUI extends javax.swing.JFrame {
         int capacity = Integer.parseInt(capacityTf.getText());
         double pricing = Double.parseDouble(pricingTf.getText());
         
-        new HallManager().updateHall(hallNo, capacity, capacity);
+        new HallManager().updateHall(hallNo, capacity, pricing);
         
         fetchHallData();
     }//GEN-LAST:event_updateBtnActionPerformed

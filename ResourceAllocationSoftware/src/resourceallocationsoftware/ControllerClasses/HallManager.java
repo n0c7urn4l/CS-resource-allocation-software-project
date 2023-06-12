@@ -50,7 +50,7 @@ public class HallManager {
         
     }
     
-    public void updateHall(int hallNo,int capacity,int pricing){
+    public void updateHall(int hallNo,int capacity,double pricing){
         try{
             
             DatabaseHandler dbHandler = new DatabaseHandler();

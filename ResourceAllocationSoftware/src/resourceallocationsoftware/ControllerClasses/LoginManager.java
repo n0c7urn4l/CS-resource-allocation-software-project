@@ -81,7 +81,6 @@ public class LoginManager {
         boolean userVerify = false;
         try{
             dbHandler = new DatabaseHandler();
-//            rs = dbHandler.getResult("SELECT userName,password,authorityLevel FROM login WHERE userName= '"+userName+"';");
             PreparedStatement pstmt = dbHandler.getPreparedStatement("select userName,password,authorityLevel FROM login WHERE userName= ?;");
             pstmt.setString(1, userName);
             rs = pstmt.executeQuery();
